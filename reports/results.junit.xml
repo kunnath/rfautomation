@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="Tests" tests="3" errors="0" failures="2" skipped="0" time="326.961">
+<testcase classname="Tests.Apirobot.Event-Processing" name="Event-process and verify the massage response" time="5.583">
+<failure message="6 != 0" type="AssertionError"></failure>
+</testcase>
+<testcase classname="Tests.Apirobot.Event-Processing" name="new and old video clip validation using api testing" time="200.563">
+</testcase>
+<testcase classname="Tests.Apirobot.Event-Processing" name="Cross validation of mp4 videos" time="120.499">
+<failure message="Evaluating expression 'ffmpeg &gt;= 0.95' failed: NameError: name 'ffmpeg' is not defined" type="AssertionError"></failure>
+</testcase>
+</testsuite>

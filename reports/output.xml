@@ -1,0 +1,279 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 3.1.2 (Python 3.7.5 on linux)" generated="20200831 14:46:44.733" rpa="false">
+<suite id="s1" name="Tests" source="/opt/robotframework/tests">
+<suite id="s1-s1" name="Apirobot" source="/opt/robotframework/tests/apirobot">
+<suite id="s1-s1-s1" name="Event-Processing" source="/opt/robotframework/tests/apirobot/event-processing.robot">
+<test id="s1-s1-s1-t1" name="Event-process and verify the massage response">
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>${path}</arg>
+</arguments>
+<msg timestamp="20200831 14:46:45.038" level="INFO">/opt/robotframework/tests/apirobot/scripts</msg>
+<status status="PASS" starttime="20200831 14:46:45.037" endtime="20200831 14:46:45.038"></status>
+</kw>
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>${apitest}</arg>
+</arguments>
+<msg timestamp="20200831 14:46:45.039" level="INFO">/opt/robotframework/tests/apirobot/scripts/compare-clips.sh -d automationpractice.com</msg>
+<status status="PASS" starttime="20200831 14:46:45.038" endtime="20200831 14:46:45.039"></status>
+</kw>
+<kw name="List Files In Directory" library="OperatingSystem">
+<doc>Wrapper for `List Directory` that returns only files.</doc>
+<arguments>
+<arg>${path}</arg>
+</arguments>
+<msg timestamp="20200831 14:46:45.040" level="INFO" html="yes">Listing contents of directory '&lt;a href="file:///opt/robotframework/tests/apirobot/scripts"&gt;/opt/robotframework/tests/apirobot/scripts&lt;/a&gt;'.</msg>
+<msg timestamp="20200831 14:46:45.056" level="INFO">6 files:
+Clip-generate.sh
+NewClip-generate.sh
+compare-clips.sh
+create-event.sh
+cross.sh
+default_env.sh</msg>
+<status status="PASS" starttime="20200831 14:46:45.039" endtime="20200831 14:46:45.056"></status>
+</kw>
+<kw name="Run And Return Rc And Output" library="OperatingSystem">
+<doc>Runs the given command in the system and returns the RC and output.</doc>
+<arguments>
+<arg>${path}/create-event.sh</arg>
+</arguments>
+<assign>
+<var>${rc}</var>
+<var>${output}</var>
+</assign>
+<msg timestamp="20200831 14:46:45.069" level="INFO">Running command '/opt/robotframework/tests/apirobot/scripts/create-event.sh 2&gt;&amp;1'.</msg>
+<msg timestamp="20200831 14:46:45.605" level="INFO">${rc} = 6</msg>
+<msg timestamp="20200831 14:46:45.606" level="INFO">${output} = + _env_file=default_env.sh
++++ dirname /opt/robotframework/tests/apirobot/scripts/create-event.sh
+++ cd /opt/robotframework/tests/apirobot/scripts/
+++ pwd
++ this_dir=/opt/robotframework/tests/apirobot...</msg>
+<status status="PASS" starttime="20200831 14:46:45.057" endtime="20200831 14:46:45.606"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>5s</arg>
+</arguments>
+<msg timestamp="20200831 14:46:50.611" level="INFO">Slept 5 seconds</msg>
+<status status="PASS" starttime="20200831 14:46:45.609" endtime="20200831 14:46:50.611"></status>
+</kw>
+<kw name="Should Be Equal As Integers" library="BuiltIn">
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<arguments>
+<arg>${rc}</arg>
+<arg>0</arg>
+</arguments>
+<msg timestamp="20200831 14:46:50.615" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;type 'unicode'&gt;</msg>
+<msg timestamp="20200831 14:46:50.616" level="FAIL">6 != 0</msg>
+<status status="FAIL" starttime="20200831 14:46:50.614" endtime="20200831 14:46:50.616"></status>
+</kw>
+<tags>
+<tag>api</tag>
+<tag>apistreaming</tag>
+<tag>clip</tag>
+</tags>
+<status status="FAIL" starttime="20200831 14:46:45.036" endtime="20200831 14:46:50.619" critical="yes">6 != 0</status>
+</test>
+<test id="s1-s1-s1-t2" name="new and old video clip validation using api testing">
+<kw name="Run And Return Rc And Output" library="OperatingSystem">
+<doc>Runs the given command in the system and returns the RC and output.</doc>
+<arguments>
+<arg>${apitest}</arg>
+</arguments>
+<assign>
+<var>${out}</var>
+<var>${outputs}</var>
+</assign>
+<msg timestamp="20200831 14:46:50.634" level="INFO">Running command '/opt/robotframework/tests/apirobot/scripts/compare-clips.sh -d automationpractice.com 2&gt;&amp;1'.</msg>
+<msg timestamp="20200831 14:46:51.171" level="INFO">${out} = 1</msg>
+<msg timestamp="20200831 14:46:51.171" level="INFO">${outputs} = + API_DOMAIN=sf-test1.com
++ API_USER=test.user+dev1@smartfrog.com
++ API_PASSWORD='Test123!!!'
++ CLIP_DURATION=120
++ SCRATCH_DIR=/opt/robotframework/artifact_store
++ '[' 2 -gt 0 ']'
++ key=-d
++ case $ke...</msg>
+<status status="PASS" starttime="20200831 14:46:50.624" endtime="20200831 14:46:51.171"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>200s</arg>
+</arguments>
+<msg timestamp="20200831 14:50:11.176" level="INFO">Slept 3 minutes 20 seconds</msg>
+<status status="PASS" starttime="20200831 14:46:51.173" endtime="20200831 14:50:11.177"></status>
+</kw>
+<kw name="Log To Console" library="BuiltIn">
+<doc>Logs the given message to the console.</doc>
+<arguments>
+<arg>${out}</arg>
+</arguments>
+<status status="PASS" starttime="20200831 14:50:11.180" endtime="20200831 14:50:11.181"></status>
+</kw>
+<kw name="Log To Console" library="BuiltIn">
+<doc>Logs the given message to the console.</doc>
+<arguments>
+<arg>${outputs}</arg>
+</arguments>
+<status status="PASS" starttime="20200831 14:50:11.182" endtime="20200831 14:50:11.183"></status>
+</kw>
+<tags>
+<tag>api</tag>
+<tag>apistreaming</tag>
+<tag>clip</tag>
+</tags>
+<status status="PASS" starttime="20200831 14:46:50.620" endtime="20200831 14:50:11.183" critical="yes"></status>
+</test>
+<test id="s1-s1-s1-t3" name="Cross validation of mp4 videos">
+<kw name="Run And Return Rc And Output" library="OperatingSystem">
+<doc>Runs the given command in the system and returns the RC and output.</doc>
+<arguments>
+<arg>${path}/cross.sh</arg>
+</arguments>
+<assign>
+<var>${rc}</var>
+<var>${outputs}</var>
+</assign>
+<msg timestamp="20200831 14:50:11.193" level="INFO">Running command '/opt/robotframework/tests/apirobot/scripts/cross.sh 2&gt;&amp;1'.</msg>
+<msg timestamp="20200831 14:50:11.660" level="INFO">${rc} = 1</msg>
+<msg timestamp="20200831 14:50:11.661" level="INFO">${outputs} = ffmpeg version 4.2.1-static https://johnvansickle.com/ffmpeg/  Copyright (c) 2000-2019 the FFmpeg developers
+  built with gcc 6.3.0 (Debian 6.3.0-18+deb9u1) 20170516
+  configuration: --enable-gpl --en...</msg>
+<status status="PASS" starttime="20200831 14:50:11.187" endtime="20200831 14:50:11.661"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>120s</arg>
+</arguments>
+<msg timestamp="20200831 14:52:11.668" level="INFO">Slept 2 minutes</msg>
+<status status="PASS" starttime="20200831 14:50:11.663" endtime="20200831 14:52:11.668"></status>
+</kw>
+<kw name="Split String" library="String">
+<doc>Splits the ``string`` using ``separator`` as a delimiter string.</doc>
+<arguments>
+<arg>string, separator=SSIM Y:, max_split=-1</arg>
+</arguments>
+<status status="PASS" starttime="20200831 14:52:11.669" endtime="20200831 14:52:11.670"></status>
+</kw>
+<kw name="Fetch From Right" library="String">
+<doc>Returns contents of the ``string`` after the last occurrence of ``marker``.</doc>
+<arguments>
+<arg>${outputs}</arg>
+<arg>SSIM Y:</arg>
+</arguments>
+<assign>
+<var>${result}</var>
+</assign>
+<msg timestamp="20200831 14:52:11.671" level="INFO">${result} = ffmpeg version 4.2.1-static https://johnvansickle.com/ffmpeg/  Copyright (c) 2000-2019 the FFmpeg developers
+  built with gcc 6.3.0 (Debian 6.3.0-18+deb9u1) 20170516
+  configuration: --enable-gpl --en...</msg>
+<status status="PASS" starttime="20200831 14:52:11.670" endtime="20200831 14:52:11.671"></status>
+</kw>
+<kw name="Split String" library="String">
+<doc>Splits the ``string`` using ``separator`` as a delimiter string.</doc>
+<arguments>
+<arg>${result}</arg>
+<arg>${SPACE}</arg>
+</arguments>
+<assign>
+<var>@{value}</var>
+</assign>
+<msg timestamp="20200831 14:52:11.673" level="INFO">@{value} = [ ffmpeg | version | 4.2.1-static | https://johnvansickle.com/ffmpeg/ |  | Copyright | (c) | 2000-2019 | the | FFmpeg | developers
+ |  | built | with | gcc | 6.3.0 | (Debian | 6.3.0-18+deb9u1) | 20170...</msg>
+<status status="PASS" starttime="20200831 14:52:11.672" endtime="20200831 14:52:11.674"></status>
+</kw>
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>${outputs}</arg>
+</arguments>
+<msg timestamp="20200831 14:52:11.676" level="INFO">ffmpeg version 4.2.1-static https://johnvansickle.com/ffmpeg/  Copyright (c) 2000-2019 the FFmpeg developers
+  built with gcc 6.3.0 (Debian 6.3.0-18+deb9u1) 20170516
+  configuration: --enable-gpl --enable-version3 --enable-static --disable-debug --disable-ffplay --disable-indev=sndio --disable-outdev=sndio --cc=gcc-6 --enable-fontconfig --enable-frei0r --enable-gnutls --enable-gmp --enable-libgme --enable-gray --enable-libaom --enable-libfribidi --enable-libass --enable-libvmaf --enable-libfreetype --enable-libmp3lame --enable-libopencore-amrnb --enable-libopencore-amrwb --enable-libopenjpeg --enable-librubberband --enable-libsoxr --enable-libspeex --enable-libsrt --enable-libvorbis --enable-libopus --enable-libtheora --enable-libvidstab --enable-libvo-amrwbenc --enable-libvpx --enable-libwebp --enable-libx264 --enable-libx265 --enable-libxml2 --enable-libdav1d --enable-libxvid --enable-libzvbi --enable-libzimg
+  libavutil      56. 31.100 / 56. 31.100
+  libavcodec     58. 54.100 / 58. 54.100
+  libavformat    58. 29.100 / 58. 29.100
+  libavdevice    58.  8.100 / 58.  8.100
+  libavfilter     7. 57.100 /  7. 57.100
+  libswscale      5.  5.100 /  5.  5.100
+  libswresample   3.  5.100 /  3.  5.100
+  libpostproc    55.  5.100 / 55.  5.100
+/opt/robotframework/artifact_store/old_clip.mp4: No such file or directory</msg>
+<status status="PASS" starttime="20200831 14:52:11.675" endtime="20200831 14:52:11.676"></status>
+</kw>
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>${result}</arg>
+</arguments>
+<msg timestamp="20200831 14:52:11.678" level="INFO">ffmpeg version 4.2.1-static https://johnvansickle.com/ffmpeg/  Copyright (c) 2000-2019 the FFmpeg developers
+  built with gcc 6.3.0 (Debian 6.3.0-18+deb9u1) 20170516
+  configuration: --enable-gpl --enable-version3 --enable-static --disable-debug --disable-ffplay --disable-indev=sndio --disable-outdev=sndio --cc=gcc-6 --enable-fontconfig --enable-frei0r --enable-gnutls --enable-gmp --enable-libgme --enable-gray --enable-libaom --enable-libfribidi --enable-libass --enable-libvmaf --enable-libfreetype --enable-libmp3lame --enable-libopencore-amrnb --enable-libopencore-amrwb --enable-libopenjpeg --enable-librubberband --enable-libsoxr --enable-libspeex --enable-libsrt --enable-libvorbis --enable-libopus --enable-libtheora --enable-libvidstab --enable-libvo-amrwbenc --enable-libvpx --enable-libwebp --enable-libx264 --enable-libx265 --enable-libxml2 --enable-libdav1d --enable-libxvid --enable-libzvbi --enable-libzimg
+  libavutil      56. 31.100 / 56. 31.100
+  libavcodec     58. 54.100 / 58. 54.100
+  libavformat    58. 29.100 / 58. 29.100
+  libavdevice    58.  8.100 / 58.  8.100
+  libavfilter     7. 57.100 /  7. 57.100
+  libswscale      5.  5.100 /  5.  5.100
+  libswresample   3.  5.100 /  3.  5.100
+  libpostproc    55.  5.100 / 55.  5.100
+/opt/robotframework/artifact_store/old_clip.mp4: No such file or directory</msg>
+<status status="PASS" starttime="20200831 14:52:11.677" endtime="20200831 14:52:11.678"></status>
+</kw>
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>@{value}[${0}]</arg>
+</arguments>
+<msg timestamp="20200831 14:52:11.680" level="INFO">ffmpeg</msg>
+<status status="PASS" starttime="20200831 14:52:11.679" endtime="20200831 14:52:11.680"></status>
+</kw>
+<kw name="Should Be True" library="BuiltIn">
+<doc>Fails if the given condition is not true.</doc>
+<arguments>
+<arg>@{value}[${0}] &gt;= 0.95</arg>
+<arg>Return code greater than .95</arg>
+</arguments>
+<msg timestamp="20200831 14:52:11.682" level="FAIL">Evaluating expression 'ffmpeg &gt;= 0.95' failed: NameError: name 'ffmpeg' is not defined</msg>
+<status status="FAIL" starttime="20200831 14:52:11.681" endtime="20200831 14:52:11.683"></status>
+</kw>
+<tags>
+<tag>api</tag>
+<tag>apistreaming</tag>
+<tag>clip</tag>
+</tags>
+<status status="FAIL" starttime="20200831 14:50:11.185" endtime="20200831 14:52:11.684" critical="yes">Evaluating expression 'ffmpeg &gt;= 0.95' failed: NameError: name 'ffmpeg' is not defined</status>
+</test>
+<status status="FAIL" starttime="20200831 14:46:44.787" endtime="20200831 14:52:11.686"></status>
+</suite>
+<status status="FAIL" starttime="20200831 14:46:44.777" endtime="20200831 14:52:11.693"></status>
+</suite>
+<status status="FAIL" starttime="20200831 14:46:44.738" endtime="20200831 14:52:11.699"></status>
+</suite>
+<statistics>
+<total>
+<stat pass="1" fail="2">Critical Tests</stat>
+<stat pass="1" fail="2">All Tests</stat>
+</total>
+<tag>
+<stat pass="1" fail="2">api</stat>
+<stat pass="1" fail="2">apistreaming</stat>
+<stat pass="1" fail="2">clip</stat>
+</tag>
+<suite>
+<stat pass="1" fail="2" id="s1" name="Tests">Tests</stat>
+<stat pass="1" fail="2" id="s1-s1" name="Apirobot">Tests.Apirobot</stat>
+<stat pass="1" fail="2" id="s1-s1-s1" name="Event-Processing">Tests.Apirobot.Event-Processing</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>
