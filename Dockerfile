@@ -26,7 +26,6 @@ RUN dnf install --setopt=install_weak_deps=False --assumeyes git python3-tkinter
 COPY docker/bin/chromedriver.sh /opt/robotframework/bin/chromedriver
 COPY docker/bin/entrypoint.sh /opt/robotframework/bin/entrypoint.sh
 COPY docker/bin/run_tests_no_fb.sh /opt/robotframework/bin/run_tests_no_fb.sh
-COPY docker/bin/run_appium.sh /opt/robotframework/bin/run_appium.sh
 
 RUN chmod 777 -R /opt/robotframework/bin &&\
     chmod 777 -R /opt/robotframework/drivers &&\
