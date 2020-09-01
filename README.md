@@ -6,7 +6,8 @@ From the terminal, you can run the included script
 Before start to run testscript ,unset ROBOT_OPTIONS
 '> unset ROBOT_OPTIONS
 
-# Step:To run device or camera testcase 
+# Step:To run WEBUI testcase
+ 
 #add envirnoment variable 
 ' > export ROBOT_OPTIONS="-i practice -v env:test"
 
