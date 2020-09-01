@@ -39,7 +39,6 @@ if [[ $1 == "automation" ]]; then
  docker run --rm $RUN_ARGS \
     --shm-size 5g \
     -v "$this_path/tests":/opt/robotframework/tests:Z \
-    -v "$this_path/tests/streaming/scripts":/opt/robotframework/tests/streaming/scripts:Z \
     -v "$this_path/reports":/opt/robotframework/reports:Z \
     -v "$this_path/artifact_store":/opt/robotframework/artifact_store:Z \
     -v "$this_path/variables":/opt/robotframework/variables:Z \
