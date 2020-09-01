@@ -16,7 +16,7 @@ Scenario 1 : User Registration
    Go to the home page.
    Click Sign in button.
    Fill Email address to create an account. 
-   Fill all fields with correct data.         ${index}
+   Fill all fields with correct data.         mr
    Click Register button.
    Verify User details.
    Verify details on home page after successful login.

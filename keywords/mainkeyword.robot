@@ -6,6 +6,7 @@ Library          DateTime
 Library          BuiltIn
 Library          String
 Library          XvfbRobot
+Variables        ../variables/${env}.py
 
 *** Keywords ***
 Go to the home page.
@@ -45,8 +46,8 @@ Fill Email address to create an account.
     Wait for pageloading
 
 Fill all fields with correct data.
-    [Arguments]                         ${index}
-    Click Element   xpath=(//input[@name="id_gender"])[${index}]
+    [Arguments]                         ${mrmrs}
+    Click Element   xpath=//label[@for="id_gender${${mrmrs}}"]
     Input Text    xpath=//input[@name="customer_firstname"]     ${firstname}
     Input Text    xpath=//input[@name="customer_lastname"]      ${lastname}
     Input Text    xpath=//input[@name="email"]                  ${username}
