@@ -1,0 +1,32 @@
+---
+execution:
+- concurrency: 10
+  ramp-up: 1m
+  hold-for: 2m30s
+  scenario: simple
+
+scenarios:
+  simple:
+    think-time: 0.75
+    requests:
+    - https://www.sf-test1.com/de-de
+    - https://www.sf-test1.com/de-de/shop/register
+    - https://www.sf-test1.com/de-de/kamera/
+    - https://www.sf-test1.com/de-de/videoaufnahme/
+    - https://www.sf-test1.com/de-de/einsatzbereiche/
+    - https://www.sf-test1.com/de-de/so-gehts/
+    - https://www.sf-test1.com/de-de/shop/products
+
+reporting:
+- module: passfail
+  criteria:
+  - avg-rt of IndexPage>150ms for 10s, stop as failed
+  - fail of CheckoutPage>50% for 10s, stop as failed
+- module: final-stats
+  summary: true  # overall samples count and percent of failures
+  percentiles: true  # display average times and percentiles
+  summary-labels: false # provides list of sample labels, status, percentage of completed, avg time and errors
+  failed-labels: false  # provides list of sample labels with failures
+  test-duration: true  # provides test duration
+  dump-xml: p.output.xml
+  dump-csv: p.output.csv
