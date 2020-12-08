@@ -12,7 +12,7 @@ Before start to run testscript ,unset ROBOT_OPTIONS
 ' > export ROBOT_OPTIONS="-i practice -v env:test"
 
 #run rfdocker in test 
-'> ./rf_docker automation
+'> ./rf_docker.sh automation
 
 # Step:To run WebUI testcase in dev
 
@@ -20,7 +20,7 @@ Before start to run testscript ,unset ROBOT_OPTIONS
 ' > export ROBOT_OPTIONS="-i practice -v env:dev -v BROWSER:ch"
 
 #run rfdocker in dev
-'> ./rf_docker automation
+'> ./rf_docker.sh automation
 
 
 From Visual Studio Code, you can run one of the following tasks
@@ -40,3 +40,4 @@ From Visual Studio Code, you can run one of the following tasks
 | SCREEN_HEIGHT               | Set the framebuffer screen height                        | 1080     |
 | SCREEN_WIDTH                | Set the framebuffer screen width                         | 1920     |
 
+# verivox

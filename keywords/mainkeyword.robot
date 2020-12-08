@@ -43,7 +43,6 @@ Fill Email address to create an account.
     Click Button   xpath=//button[@id='SubmitCreate']
     Sleep           5s
     Capture Page Screenshot
-    Wait for pageloading
 
 Fill all fields with correct data.
     [Arguments]                         ${mrmrs}
@@ -122,8 +121,6 @@ Select the payment method.
 Click on I confirm my order.
     Click Element   xpath=//span[contains(text(),'I confirm my order')]
 
-Verify details on final confirmation page.
-    Element Should Contain     xpath=//h1[@class='page-heading']     ORDER CONFIRMATION
 
 Wait for pageloading
     Capture Page Screenshot
