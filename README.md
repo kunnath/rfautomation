@@ -41,3 +41,4 @@ From Visual Studio Code, you can run one of the following tasks
 | SCREEN_WIDTH                | Set the framebuffer screen width                         | 1920     |
 
 # verivox
+# verivox
