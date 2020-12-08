@@ -1,277 +1,1501 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<robot generator="Robot 3.1.2 (Python 3.7.5 on linux)" generated="20200831 14:46:44.733" rpa="false">
+<robot generator="Robot 3.1.2 (Python 3.7.5 on linux)" generated="20201208 17:54:17.876" rpa="false">
 <suite id="s1" name="Tests" source="/opt/robotframework/tests">
-<suite id="s1-s1" name="Apirobot" source="/opt/robotframework/tests/apirobot">
-<suite id="s1-s1-s1" name="Event-Processing" source="/opt/robotframework/tests/apirobot/event-processing.robot">
-<test id="s1-s1-s1-t1" name="Event-process and verify the massage response">
-<kw name="Log" library="BuiltIn">
-<doc>Logs the given message with the given level.</doc>
+<suite id="s1-s1" name="Mainwebsite" source="/opt/robotframework/tests/mainwebsite">
+<suite id="s1-s1-s1" name="Verivox" source="/opt/robotframework/tests/mainwebsite/verivox.robot">
+<test id="s1-s1-s1-t1" name="Scenario 1: Verify the DSL calculator">
+<kw name="GIVEN I can open www.verivox.de" library="mainkeyword">
+<kw name="Log To Console" library="BuiltIn">
+<doc>Logs the given message to the console.</doc>
 <arguments>
-<arg>${path}</arg>
+<arg>${BROWSER}</arg>
 </arguments>
-<msg timestamp="20200831 14:46:45.038" level="INFO">/opt/robotframework/tests/apirobot/scripts</msg>
-<status status="PASS" starttime="20200831 14:46:45.037" endtime="20200831 14:46:45.038"></status>
+<status status="PASS" starttime="20201208 17:54:18.942" endtime="20201208 17:54:18.946"></status>
 </kw>
-<kw name="Log" library="BuiltIn">
-<doc>Logs the given message with the given level.</doc>
+<kw name="Open chrome browser" library="mainkeyword">
+<kw name="Evaluate" library="BuiltIn">
+<doc>Evaluates the given expression in Python and returns the results.</doc>
 <arguments>
-<arg>${apitest}</arg>
-</arguments>
-<msg timestamp="20200831 14:46:45.039" level="INFO">/opt/robotframework/tests/apirobot/scripts/compare-clips.sh -d automationpractice.com</msg>
-<status status="PASS" starttime="20200831 14:46:45.038" endtime="20200831 14:46:45.039"></status>
-</kw>
-<kw name="List Files In Directory" library="OperatingSystem">
-<doc>Wrapper for `List Directory` that returns only files.</doc>
-<arguments>
-<arg>${path}</arg>
-</arguments>
-<msg timestamp="20200831 14:46:45.040" level="INFO" html="yes">Listing contents of directory '&lt;a href="file:///opt/robotframework/tests/apirobot/scripts"&gt;/opt/robotframework/tests/apirobot/scripts&lt;/a&gt;'.</msg>
-<msg timestamp="20200831 14:46:45.056" level="INFO">6 files:
-Clip-generate.sh
-NewClip-generate.sh
-compare-clips.sh
-create-event.sh
-cross.sh
-default_env.sh</msg>
-<status status="PASS" starttime="20200831 14:46:45.039" endtime="20200831 14:46:45.056"></status>
-</kw>
-<kw name="Run And Return Rc And Output" library="OperatingSystem">
-<doc>Runs the given command in the system and returns the RC and output.</doc>
-<arguments>
-<arg>${path}/create-event.sh</arg>
+<arg>sys.modules['selenium.webdriver'].ChromeOptions()</arg>
+<arg>sys, selenium.webdriver</arg>
 </arguments>
 <assign>
-<var>${rc}</var>
-<var>${output}</var>
+<var>${chrome_options}</var>
 </assign>
-<msg timestamp="20200831 14:46:45.069" level="INFO">Running command '/opt/robotframework/tests/apirobot/scripts/create-event.sh 2&gt;&amp;1'.</msg>
-<msg timestamp="20200831 14:46:45.605" level="INFO">${rc} = 6</msg>
-<msg timestamp="20200831 14:46:45.606" level="INFO">${output} = + _env_file=default_env.sh
-+++ dirname /opt/robotframework/tests/apirobot/scripts/create-event.sh
-++ cd /opt/robotframework/tests/apirobot/scripts/
-++ pwd
-+ this_dir=/opt/robotframework/tests/apirobot...</msg>
-<status status="PASS" starttime="20200831 14:46:45.057" endtime="20200831 14:46:45.606"></status>
+<msg timestamp="20201208 17:54:18.948" level="INFO">${chrome_options} = &lt;selenium.webdriver.chrome.options.Options object at 0x7f632da981d0&gt;</msg>
+<status status="PASS" starttime="20201208 17:54:18.947" endtime="20201208 17:54:18.948"></status>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<arguments>
+<arg>credentials_enable_service=${false}</arg>
+</arguments>
+<assign>
+<var>${prefs}</var>
+</assign>
+<msg timestamp="20201208 17:54:18.950" level="INFO">${prefs} = {'credentials_enable_service': False}</msg>
+<status status="PASS" starttime="20201208 17:54:18.948" endtime="20201208 17:54:18.950"></status>
+</kw>
+<kw name="Call Method" library="BuiltIn">
+<doc>Calls the named method of the given object with the provided arguments.</doc>
+<arguments>
+<arg>${chrome_options}</arg>
+<arg>add_experimental_option</arg>
+<arg>prefs</arg>
+<arg>${prefs}</arg>
+</arguments>
+<status status="PASS" starttime="20201208 17:54:18.951" endtime="20201208 17:54:18.952"></status>
+</kw>
+<kw name="Call Method" library="BuiltIn">
+<doc>Calls the named method of the given object with the provided arguments.</doc>
+<arguments>
+<arg>${chrome_options}</arg>
+<arg>add_argument</arg>
+<arg>--disable-infobars</arg>
+</arguments>
+<status status="PASS" starttime="20201208 17:54:18.953" endtime="20201208 17:54:18.954"></status>
+</kw>
+<kw name="Create Webdriver" library="SeleniumLibrary">
+<doc>Creates an instance of Selenium WebDriver.</doc>
+<arguments>
+<arg>Chrome</arg>
+<arg>chrome_options=${chrome_options}</arg>
+</arguments>
+<msg timestamp="20201208 17:54:18.955" level="INFO">Creating an instance of the Chrome WebDriver.</msg>
+<status status="PASS" starttime="20201208 17:54:18.954" endtime="20201208 17:54:24.671"></status>
+</kw>
+<kw name="Open Browser" library="SeleniumLibrary">
+<doc>Opens a new browser instance to the given ``url``.</doc>
+<arguments>
+<arg>${url}</arg>
+<arg>${BROWSER}</arg>
+</arguments>
+<msg timestamp="20201208 17:54:24.673" level="INFO">Opening browser 'firefox' to base url 'http://www.verivox.de'.</msg>
+<status status="PASS" starttime="20201208 17:54:24.672" endtime="20201208 17:54:42.149"></status>
 </kw>
 <kw name="Sleep" library="BuiltIn">
 <doc>Pauses the test executed for the given time.</doc>
 <arguments>
 <arg>5s</arg>
 </arguments>
-<msg timestamp="20200831 14:46:50.611" level="INFO">Slept 5 seconds</msg>
-<status status="PASS" starttime="20200831 14:46:45.609" endtime="20200831 14:46:50.611"></status>
+<msg timestamp="20201208 17:54:47.152" level="INFO">Slept 5 seconds</msg>
+<status status="PASS" starttime="20201208 17:54:42.149" endtime="20201208 17:54:47.152"></status>
 </kw>
-<kw name="Should Be Equal As Integers" library="BuiltIn">
-<doc>Fails if objects are unequal after converting them to integers.</doc>
+<kw name="Capture Page Screenshot" library="SeleniumLibrary">
+<doc>Takes screenshot of the current page and embeds it into log file.</doc>
+<msg timestamp="20201208 17:54:47.499" level="INFO" html="yes">&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td colspan="3"&gt;&lt;a href="selenium-screenshot-85.png"&gt;&lt;img src="selenium-screenshot-85.png" width="800px"&gt;&lt;/a&gt;</msg>
+<status status="PASS" starttime="20201208 17:54:47.153" endtime="20201208 17:54:47.500"></status>
+</kw>
+<kw name="Accept cookies" library="mainkeyword">
+<kw name="Set Focus To Element" library="SeleniumLibrary">
+<doc>Sets focus to element identified by ``locator``.</doc>
 <arguments>
-<arg>${rc}</arg>
+<arg>xpath=//button[@class="gdpr-button gdpr-accept-all first-layer"]</arg>
+</arguments>
+<status status="PASS" starttime="20201208 17:54:47.501" endtime="20201208 17:54:47.595"></status>
+</kw>
+<kw name="Page Should Contain Element" library="SeleniumLibrary">
+<doc>Verifies that element ``locator`` is found on the current page.</doc>
+<arguments>
+<arg>xpath=//button[@class="gdpr-button gdpr-accept-all first-layer"]</arg>
+</arguments>
+<assign>
+<var>${Result}</var>
+</assign>
+<msg timestamp="20201208 17:54:47.616" level="INFO">Current page contains element 'xpath=//button[@class="gdpr-button gdpr-accept-all first-layer"]'.</msg>
+<msg timestamp="20201208 17:54:47.616" level="INFO">${Result} = None</msg>
+<status status="PASS" starttime="20201208 17:54:47.595" endtime="20201208 17:54:47.617"></status>
+</kw>
+<kw name="Run Keyword Unless" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments if ``condition`` is false.</doc>
+<arguments>
+<arg>'${RESULT}'=='PASS'</arg>
+<arg>Click Element</arg>
+<arg>xpath=//button[@class="gdpr-button gdpr-accept-all first-layer"]</arg>
+</arguments>
+<kw name="Click Element" library="SeleniumLibrary">
+<doc>Click element identified by ``locator``.</doc>
+<arguments>
+<arg>xpath=//button[@class="gdpr-button gdpr-accept-all first-layer"]</arg>
+</arguments>
+<msg timestamp="20201208 17:54:47.618" level="INFO">Clicking element 'xpath=//button[@class="gdpr-button gdpr-accept-all first-layer"]'.</msg>
+<status status="PASS" starttime="20201208 17:54:47.618" endtime="20201208 17:54:47.933"></status>
+</kw>
+<status status="PASS" starttime="20201208 17:54:47.617" endtime="20201208 17:54:47.933"></status>
+</kw>
+<status status="PASS" starttime="20201208 17:54:47.500" endtime="20201208 17:54:47.934"></status>
+</kw>
+<status status="PASS" starttime="20201208 17:54:18.946" endtime="20201208 17:54:47.934"></status>
+</kw>
+<status status="PASS" starttime="20201208 17:54:18.940" endtime="20201208 17:54:47.935"></status>
+</kw>
+<kw name="WHEN I navigate to the DSL calculator page" library="mainkeyword">
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>3s</arg>
+</arguments>
+<msg timestamp="20201208 17:54:50.940" level="INFO">Slept 3 seconds</msg>
+<status status="PASS" starttime="20201208 17:54:47.937" endtime="20201208 17:54:50.941"></status>
+</kw>
+<kw name="Page Should Contain Element" library="SeleniumLibrary">
+<doc>Verifies that element ``locator`` is found on the current page.</doc>
+<arguments>
+<arg>xpath=//span[@class="mps-label-text" and contains(text(),'DSL')]</arg>
+</arguments>
+<msg timestamp="20201208 17:54:53.770" level="INFO">Current page contains element 'xpath=//span[@class="mps-label-text" and contains(text(),'DSL')]'.</msg>
+<status status="PASS" starttime="20201208 17:54:50.943" endtime="20201208 17:54:53.771"></status>
+</kw>
+<kw name="Click Element" library="SeleniumLibrary">
+<doc>Click element identified by ``locator``.</doc>
+<arguments>
+<arg>xpath=//span[@class="mps-label-text" and contains(text(),'${mps_label}')]</arg>
+</arguments>
+<msg timestamp="20201208 17:54:53.774" level="INFO">Clicking element 'xpath=//span[@class="mps-label-text" and contains(text(),'DSL')]'.</msg>
+<status status="PASS" starttime="20201208 17:54:53.771" endtime="20201208 17:54:54.323"></status>
+</kw>
+<kw name="Wait for calculator" library="mainkeyword">
+<kw name="Capture Page Screenshot" library="SeleniumLibrary">
+<doc>Takes screenshot of the current page and embeds it into log file.</doc>
+<msg timestamp="20201208 17:54:55.072" level="INFO" html="yes">&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td colspan="3"&gt;&lt;a href="selenium-screenshot-86.png"&gt;&lt;img src="selenium-screenshot-86.png" width="800px"&gt;&lt;/a&gt;</msg>
+<status status="PASS" starttime="20201208 17:54:54.325" endtime="20201208 17:54:55.072"></status>
+</kw>
+<kw name="Get Element Count" library="SeleniumLibrary">
+<doc>Returns number of elements matching ``locator``.</doc>
+<arguments>
+<arg>xpath=//div[@class="calculator-headline" and contains(text(),'Internet+Telefon')]</arg>
+</arguments>
+<assign>
+<var>${elm_present}</var>
+</assign>
+<msg timestamp="20201208 17:54:55.184" level="INFO">${elm_present} = 1</msg>
+<status status="PASS" starttime="20201208 17:54:55.073" endtime="20201208 17:54:55.185"></status>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<arguments>
+<arg>'${elm_present}' &gt;= '1'</arg>
+<arg>Sleep</arg>
+<arg>10s</arg>
+</arguments>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>10s</arg>
+</arguments>
+<msg timestamp="20201208 17:55:05.192" level="INFO">Slept 10 seconds</msg>
+<status status="PASS" starttime="20201208 17:54:55.189" endtime="20201208 17:55:05.192"></status>
+</kw>
+<status status="PASS" starttime="20201208 17:54:55.185" endtime="20201208 17:55:05.193"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>5s</arg>
+</arguments>
+<msg timestamp="20201208 17:55:10.196" level="INFO">Slept 5 seconds</msg>
+<status status="PASS" starttime="20201208 17:55:05.193" endtime="20201208 17:55:10.196"></status>
+</kw>
+<status status="PASS" starttime="20201208 17:54:54.324" endtime="20201208 17:55:10.197"></status>
+</kw>
+<kw name="Capture Page Screenshot" library="SeleniumLibrary">
+<doc>Takes screenshot of the current page and embeds it into log file.</doc>
+<msg timestamp="20201208 17:55:10.572" level="INFO" html="yes">&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td colspan="3"&gt;&lt;a href="selenium-screenshot-87.png"&gt;&lt;img src="selenium-screenshot-87.png" width="800px"&gt;&lt;/a&gt;</msg>
+<status status="PASS" starttime="20201208 17:55:10.198" endtime="20201208 17:55:10.572"></status>
+</kw>
+<status status="PASS" starttime="20201208 17:54:47.935" endtime="20201208 17:55:10.572"></status>
+</kw>
+<kw name="AND I enter 030 for my area code" library="mainkeyword">
+<kw name="Input Text" library="SeleniumLibrary">
+<doc>Types the given ``text`` into text field identified by ``locator``.</doc>
+<arguments>
+<arg>xpath=//input[@name="phonePrefix"]</arg>
+<arg>${areacode}</arg>
+</arguments>
+<msg timestamp="20201208 17:55:10.574" level="INFO">Typing text '030' into text field 'xpath=//input[@name="phonePrefix"]'.</msg>
+<status status="PASS" starttime="20201208 17:55:10.573" endtime="20201208 17:55:10.656"></status>
+</kw>
+<status status="PASS" starttime="20201208 17:55:10.573" endtime="20201208 17:55:10.656"></status>
+</kw>
+<kw name="AND I select the 100 Mbit/s bandwidth option" library="mainkeyword">
+<kw name="Wait Until Element Is Visible" library="SeleniumLibrary">
+<doc>Waits until element ``locator`` is visible.</doc>
+<arguments>
+<arg>xpath=//div[@class="calc-toggles toggle-two-lines"]</arg>
+</arguments>
+<status status="PASS" starttime="20201208 17:55:10.656" endtime="20201208 17:55:10.715"></status>
+</kw>
+<kw name="Click Element" library="SeleniumLibrary">
+<doc>Click element identified by ``locator``.</doc>
+<arguments>
+<arg>xpath=//div[@class="calc-toggles toggle-two-lines"]</arg>
+</arguments>
+<msg timestamp="20201208 17:55:10.716" level="INFO">Clicking element 'xpath=//div[@class="calc-toggles toggle-two-lines"]'.</msg>
+<status status="PASS" starttime="20201208 17:55:10.715" endtime="20201208 17:55:10.987"></status>
+</kw>
+<kw name="Set Focus To Element" library="SeleniumLibrary">
+<doc>Sets focus to element identified by ``locator``.</doc>
+<arguments>
+<arg>xpath=(//div[@class="calc-toggles toggle-two-lines"]/label)[3]</arg>
+</arguments>
+<status status="PASS" starttime="20201208 17:55:10.987" endtime="20201208 17:55:11.009"></status>
+</kw>
+<kw name="Click Element" library="SeleniumLibrary">
+<doc>Click element identified by ``locator``.</doc>
+<arguments>
+<arg>xpath=(//div[@class="calc-toggles toggle-two-lines"]/label)[3]</arg>
+</arguments>
+<msg timestamp="20201208 17:55:11.010" level="INFO">Clicking element 'xpath=(//div[@class="calc-toggles toggle-two-lines"]/label)[3]'.</msg>
+<status status="PASS" starttime="20201208 17:55:11.009" endtime="20201208 17:55:11.261"></status>
+</kw>
+<kw name="Capture Page Screenshot" library="SeleniumLibrary">
+<doc>Takes screenshot of the current page and embeds it into log file.</doc>
+<msg timestamp="20201208 17:55:11.707" level="INFO" html="yes">&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td colspan="3"&gt;&lt;a href="selenium-screenshot-88.png"&gt;&lt;img src="selenium-screenshot-88.png" width="800px"&gt;&lt;/a&gt;</msg>
+<status status="PASS" starttime="20201208 17:55:11.261" endtime="20201208 17:55:11.707"></status>
+</kw>
+<status status="PASS" starttime="20201208 17:55:10.656" endtime="20201208 17:55:11.708"></status>
+</kw>
+<kw name="AND I click the Jetzt vergleichen button" library="mainkeyword">
+<kw name="Click Element" library="SeleniumLibrary">
+<doc>Click element identified by ``locator``.</doc>
+<arguments>
+<arg>xpath=(//button[@class="page-button" and contains(text(),'Jetzt vergleichen')])[4]</arg>
+</arguments>
+<msg timestamp="20201208 17:55:11.709" level="INFO">Clicking element 'xpath=(//button[@class="page-button" and contains(text(),'Jetzt vergleichen')])[4]'.</msg>
+<status status="PASS" starttime="20201208 17:55:11.708" endtime="20201208 17:55:18.623"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>5s</arg>
+</arguments>
+<msg timestamp="20201208 17:55:23.627" level="INFO">Slept 5 seconds</msg>
+<status status="PASS" starttime="20201208 17:55:18.624" endtime="20201208 17:55:23.627"></status>
+</kw>
+<kw name="Capture Page Screenshot" library="SeleniumLibrary">
+<doc>Takes screenshot of the current page and embeds it into log file.</doc>
+<msg timestamp="20201208 17:55:24.050" level="INFO" html="yes">&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td colspan="3"&gt;&lt;a href="selenium-screenshot-89.png"&gt;&lt;img src="selenium-screenshot-89.png" width="800px"&gt;&lt;/a&gt;</msg>
+<status status="PASS" starttime="20201208 17:55:23.628" endtime="20201208 17:55:24.051"></status>
+</kw>
+<status status="PASS" starttime="20201208 17:55:11.708" endtime="20201208 17:55:24.051"></status>
+</kw>
+<kw name="THEN I should see a page that lists the available tariffs for my selection" library="mainkeyword">
+<kw name="Reload Page" library="SeleniumLibrary">
+<doc>Simulates user reloading page.</doc>
+<status status="PASS" starttime="20201208 17:55:24.053" endtime="20201208 17:55:31.305"></status>
+</kw>
+<kw name="Capture Page Screenshot" library="SeleniumLibrary">
+<doc>Takes screenshot of the current page and embeds it into log file.</doc>
+<msg timestamp="20201208 17:55:31.697" level="INFO" html="yes">&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td colspan="3"&gt;&lt;a href="selenium-screenshot-90.png"&gt;&lt;img src="selenium-screenshot-90.png" width="800px"&gt;&lt;/a&gt;</msg>
+<status status="PASS" starttime="20201208 17:55:31.306" endtime="20201208 17:55:31.698"></status>
+</kw>
+<kw name="Get Element Count" library="SeleniumLibrary">
+<doc>Returns number of elements matching ``locator``.</doc>
+<arguments>
+<arg>xpath=//button[@class="button-secondary w-100 tariff-details-toggle"]</arg>
+</arguments>
+<assign>
+<var>${count1}</var>
+</assign>
+<msg timestamp="20201208 17:55:31.716" level="INFO">${count1} = 0</msg>
+<status status="PASS" starttime="20201208 17:55:31.698" endtime="20201208 17:55:31.716"></status>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<arguments>
+<arg>${count1} &gt;= 5</arg>
+<arg>Run Keywords</arg>
+<arg>PassedExecution</arg>
+</arguments>
+<status status="PASS" starttime="20201208 17:55:31.717" endtime="20201208 17:55:31.718"></status>
+</kw>
+<kw name="Get Element Count" library="SeleniumLibrary">
+<doc>Returns number of elements matching ``locator``.</doc>
+<arguments>
+<arg>xpath=//div[@class="d-flex internet-speed internet-speed-download"]//b[contains(text(),'100')]</arg>
+</arguments>
+<assign>
+<var>${count2}</var>
+</assign>
+<msg timestamp="20201208 17:55:31.741" level="INFO">${count2} = 0</msg>
+<status status="PASS" starttime="20201208 17:55:31.718" endtime="20201208 17:55:31.741"></status>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<arguments>
+<arg>${count2} &lt; 5</arg>
+<arg>Run Keywords</arg>
+<arg>FailedExecution</arg>
+</arguments>
+<kw name="Run Keywords" library="BuiltIn">
+<doc>Executes all the given keywords in a sequence.</doc>
+<arguments>
+<arg>FailedExecution</arg>
+</arguments>
+<kw name="FailedExecution" library="mainkeyword">
+<kw name="Set Suite Variable" library="BuiltIn">
+<doc>Makes a variable available everywhere within the scope of the current suite.</doc>
+<arguments>
+<arg>${Executionsstep}</arg>
 <arg>0</arg>
 </arguments>
-<msg timestamp="20200831 14:46:50.615" level="INFO">Argument types are:
-&lt;class 'int'&gt;
-&lt;type 'unicode'&gt;</msg>
-<msg timestamp="20200831 14:46:50.616" level="FAIL">6 != 0</msg>
-<status status="FAIL" starttime="20200831 14:46:50.614" endtime="20200831 14:46:50.616"></status>
+<msg timestamp="20201208 17:55:31.752" level="INFO">${Executionsstep} = 0</msg>
+<status status="PASS" starttime="20201208 17:55:31.751" endtime="20201208 17:55:31.752"></status>
+</kw>
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>${Executionsstep}</arg>
+</arguments>
+<msg timestamp="20201208 17:55:31.753" level="INFO">0</msg>
+<status status="PASS" starttime="20201208 17:55:31.753" endtime="20201208 17:55:31.753"></status>
+</kw>
+<kw name="Capture Page Screenshot" library="SeleniumLibrary">
+<doc>Takes screenshot of the current page and embeds it into log file.</doc>
+<msg timestamp="20201208 17:55:32.889" level="INFO" html="yes">&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td colspan="3"&gt;&lt;a href="selenium-screenshot-91.png"&gt;&lt;img src="selenium-screenshot-91.png" width="800px"&gt;&lt;/a&gt;</msg>
+<status status="PASS" starttime="20201208 17:55:31.753" endtime="20201208 17:55:32.890"></status>
+</kw>
+<status status="PASS" starttime="20201208 17:55:31.749" endtime="20201208 17:55:32.891"></status>
+</kw>
+<status status="PASS" starttime="20201208 17:55:31.748" endtime="20201208 17:55:32.891"></status>
+</kw>
+<status status="PASS" starttime="20201208 17:55:31.747" endtime="20201208 17:55:32.891"></status>
+</kw>
+<status status="PASS" starttime="20201208 17:55:24.052" endtime="20201208 17:55:32.891"></status>
 </kw>
 <tags>
-<tag>api</tag>
-<tag>apistreaming</tag>
-<tag>clip</tag>
+<tag>DSL</tag>
+<tag>practice</tag>
+<tag>smoke</tag>
 </tags>
-<status status="FAIL" starttime="20200831 14:46:45.036" endtime="20200831 14:46:50.619" critical="yes">6 != 0</status>
+<status status="PASS" starttime="20201208 17:54:18.937" endtime="20201208 17:55:32.892" critical="yes"></status>
 </test>
-<test id="s1-s1-s1-t2" name="new and old video clip validation using api testing">
-<kw name="Run And Return Rc And Output" library="OperatingSystem">
-<doc>Runs the given command in the system and returns the RC and output.</doc>
+<test id="s1-s1-s1-t2" name="Scenario 2: Load multiple tariff result pages">
+<kw name="GIVEN the same tariff calculation criteria from scenario 1" library="mainkeyword">
+<kw name="GIVEN I can open www.verivox.de" library="mainkeyword">
+<kw name="Log To Console" library="BuiltIn">
+<doc>Logs the given message to the console.</doc>
 <arguments>
-<arg>${apitest}</arg>
+<arg>${BROWSER}</arg>
+</arguments>
+<status status="PASS" starttime="20201208 17:55:33.075" endtime="20201208 17:55:33.195"></status>
+</kw>
+<kw name="Open chrome browser" library="mainkeyword">
+<kw name="Evaluate" library="BuiltIn">
+<doc>Evaluates the given expression in Python and returns the results.</doc>
+<arguments>
+<arg>sys.modules['selenium.webdriver'].ChromeOptions()</arg>
+<arg>sys, selenium.webdriver</arg>
 </arguments>
 <assign>
-<var>${out}</var>
-<var>${outputs}</var>
+<var>${chrome_options}</var>
 </assign>
-<msg timestamp="20200831 14:46:50.634" level="INFO">Running command '/opt/robotframework/tests/apirobot/scripts/compare-clips.sh -d automationpractice.com 2&gt;&amp;1'.</msg>
-<msg timestamp="20200831 14:46:51.171" level="INFO">${out} = 1</msg>
-<msg timestamp="20200831 14:46:51.171" level="INFO">${outputs} = + API_DOMAIN=sf-test1.com
-+ API_USER=test.user+dev1@smartfrog.com
-+ API_PASSWORD='Test123!!!'
-+ CLIP_DURATION=120
-+ SCRATCH_DIR=/opt/robotframework/artifact_store
-+ '[' 2 -gt 0 ']'
-+ key=-d
-+ case $ke...</msg>
-<status status="PASS" starttime="20200831 14:46:50.624" endtime="20200831 14:46:51.171"></status>
+<msg timestamp="20201208 17:55:33.325" level="INFO">${chrome_options} = &lt;selenium.webdriver.chrome.options.Options object at 0x7f632da47d10&gt;</msg>
+<status status="PASS" starttime="20201208 17:55:33.212" endtime="20201208 17:55:33.325"></status>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<arguments>
+<arg>credentials_enable_service=${false}</arg>
+</arguments>
+<assign>
+<var>${prefs}</var>
+</assign>
+<msg timestamp="20201208 17:55:33.350" level="INFO">${prefs} = {'credentials_enable_service': False}</msg>
+<status status="PASS" starttime="20201208 17:55:33.326" endtime="20201208 17:55:33.350"></status>
+</kw>
+<kw name="Call Method" library="BuiltIn">
+<doc>Calls the named method of the given object with the provided arguments.</doc>
+<arguments>
+<arg>${chrome_options}</arg>
+<arg>add_experimental_option</arg>
+<arg>prefs</arg>
+<arg>${prefs}</arg>
+</arguments>
+<status status="PASS" starttime="20201208 17:55:33.351" endtime="20201208 17:55:33.359"></status>
+</kw>
+<kw name="Call Method" library="BuiltIn">
+<doc>Calls the named method of the given object with the provided arguments.</doc>
+<arguments>
+<arg>${chrome_options}</arg>
+<arg>add_argument</arg>
+<arg>--disable-infobars</arg>
+</arguments>
+<status status="PASS" starttime="20201208 17:55:33.359" endtime="20201208 17:55:33.360"></status>
+</kw>
+<kw name="Create Webdriver" library="SeleniumLibrary">
+<doc>Creates an instance of Selenium WebDriver.</doc>
+<arguments>
+<arg>Chrome</arg>
+<arg>chrome_options=${chrome_options}</arg>
+</arguments>
+<msg timestamp="20201208 17:55:33.366" level="INFO">Creating an instance of the Chrome WebDriver.</msg>
+<status status="PASS" starttime="20201208 17:55:33.361" endtime="20201208 17:55:39.770"></status>
+</kw>
+<kw name="Open Browser" library="SeleniumLibrary">
+<doc>Opens a new browser instance to the given ``url``.</doc>
+<arguments>
+<arg>${url}</arg>
+<arg>${BROWSER}</arg>
+</arguments>
+<msg timestamp="20201208 17:55:39.774" level="INFO">Opening browser 'firefox' to base url 'http://www.verivox.de'.</msg>
+<status status="PASS" starttime="20201208 17:55:39.773" endtime="20201208 17:55:59.817"></status>
 </kw>
 <kw name="Sleep" library="BuiltIn">
 <doc>Pauses the test executed for the given time.</doc>
 <arguments>
-<arg>200s</arg>
+<arg>5s</arg>
 </arguments>
-<msg timestamp="20200831 14:50:11.176" level="INFO">Slept 3 minutes 20 seconds</msg>
-<status status="PASS" starttime="20200831 14:46:51.173" endtime="20200831 14:50:11.177"></status>
+<msg timestamp="20201208 17:56:04.820" level="INFO">Slept 5 seconds</msg>
+<status status="PASS" starttime="20201208 17:55:59.818" endtime="20201208 17:56:04.822"></status>
 </kw>
-<kw name="Log To Console" library="BuiltIn">
-<doc>Logs the given message to the console.</doc>
+<kw name="Capture Page Screenshot" library="SeleniumLibrary">
+<doc>Takes screenshot of the current page and embeds it into log file.</doc>
+<msg timestamp="20201208 17:56:05.161" level="INFO" html="yes">&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td colspan="3"&gt;&lt;a href="selenium-screenshot-92.png"&gt;&lt;img src="selenium-screenshot-92.png" width="800px"&gt;&lt;/a&gt;</msg>
+<status status="PASS" starttime="20201208 17:56:04.823" endtime="20201208 17:56:05.162"></status>
+</kw>
+<kw name="Accept cookies" library="mainkeyword">
+<kw name="Set Focus To Element" library="SeleniumLibrary">
+<doc>Sets focus to element identified by ``locator``.</doc>
 <arguments>
-<arg>${out}</arg>
+<arg>xpath=//button[@class="gdpr-button gdpr-accept-all first-layer"]</arg>
 </arguments>
-<status status="PASS" starttime="20200831 14:50:11.180" endtime="20200831 14:50:11.181"></status>
+<status status="PASS" starttime="20201208 17:56:05.163" endtime="20201208 17:56:05.209"></status>
 </kw>
-<kw name="Log To Console" library="BuiltIn">
-<doc>Logs the given message to the console.</doc>
+<kw name="Page Should Contain Element" library="SeleniumLibrary">
+<doc>Verifies that element ``locator`` is found on the current page.</doc>
 <arguments>
-<arg>${outputs}</arg>
-</arguments>
-<status status="PASS" starttime="20200831 14:50:11.182" endtime="20200831 14:50:11.183"></status>
-</kw>
-<tags>
-<tag>api</tag>
-<tag>apistreaming</tag>
-<tag>clip</tag>
-</tags>
-<status status="PASS" starttime="20200831 14:46:50.620" endtime="20200831 14:50:11.183" critical="yes"></status>
-</test>
-<test id="s1-s1-s1-t3" name="Cross validation of mp4 videos">
-<kw name="Run And Return Rc And Output" library="OperatingSystem">
-<doc>Runs the given command in the system and returns the RC and output.</doc>
-<arguments>
-<arg>${path}/cross.sh</arg>
+<arg>xpath=//button[@class="gdpr-button gdpr-accept-all first-layer"]</arg>
 </arguments>
 <assign>
-<var>${rc}</var>
-<var>${outputs}</var>
+<var>${Result}</var>
 </assign>
-<msg timestamp="20200831 14:50:11.193" level="INFO">Running command '/opt/robotframework/tests/apirobot/scripts/cross.sh 2&gt;&amp;1'.</msg>
-<msg timestamp="20200831 14:50:11.660" level="INFO">${rc} = 1</msg>
-<msg timestamp="20200831 14:50:11.661" level="INFO">${outputs} = ffmpeg version 4.2.1-static https://johnvansickle.com/ffmpeg/  Copyright (c) 2000-2019 the FFmpeg developers
-  built with gcc 6.3.0 (Debian 6.3.0-18+deb9u1) 20170516
-  configuration: --enable-gpl --en...</msg>
-<status status="PASS" starttime="20200831 14:50:11.187" endtime="20200831 14:50:11.661"></status>
+<msg timestamp="20201208 17:56:05.228" level="INFO">Current page contains element 'xpath=//button[@class="gdpr-button gdpr-accept-all first-layer"]'.</msg>
+<msg timestamp="20201208 17:56:05.229" level="INFO">${Result} = None</msg>
+<status status="PASS" starttime="20201208 17:56:05.209" endtime="20201208 17:56:05.229"></status>
+</kw>
+<kw name="Run Keyword Unless" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments if ``condition`` is false.</doc>
+<arguments>
+<arg>'${RESULT}'=='PASS'</arg>
+<arg>Click Element</arg>
+<arg>xpath=//button[@class="gdpr-button gdpr-accept-all first-layer"]</arg>
+</arguments>
+<kw name="Click Element" library="SeleniumLibrary">
+<doc>Click element identified by ``locator``.</doc>
+<arguments>
+<arg>xpath=//button[@class="gdpr-button gdpr-accept-all first-layer"]</arg>
+</arguments>
+<msg timestamp="20201208 17:56:05.232" level="INFO">Clicking element 'xpath=//button[@class="gdpr-button gdpr-accept-all first-layer"]'.</msg>
+<status status="PASS" starttime="20201208 17:56:05.231" endtime="20201208 17:56:05.517"></status>
+</kw>
+<status status="PASS" starttime="20201208 17:56:05.230" endtime="20201208 17:56:05.517"></status>
+</kw>
+<status status="PASS" starttime="20201208 17:56:05.162" endtime="20201208 17:56:05.517"></status>
+</kw>
+<status status="PASS" starttime="20201208 17:55:33.200" endtime="20201208 17:56:05.517"></status>
+</kw>
+<status status="PASS" starttime="20201208 17:55:33.028" endtime="20201208 17:56:05.518"></status>
+</kw>
+<kw name="WHEN I navigate to the DSL calculator page" library="mainkeyword">
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>3s</arg>
+</arguments>
+<msg timestamp="20201208 17:56:08.524" level="INFO">Slept 3 seconds</msg>
+<status status="PASS" starttime="20201208 17:56:05.523" endtime="20201208 17:56:08.524"></status>
+</kw>
+<kw name="Page Should Contain Element" library="SeleniumLibrary">
+<doc>Verifies that element ``locator`` is found on the current page.</doc>
+<arguments>
+<arg>xpath=//span[@class="mps-label-text" and contains(text(),'DSL')]</arg>
+</arguments>
+<msg timestamp="20201208 17:56:08.621" level="INFO">Current page contains element 'xpath=//span[@class="mps-label-text" and contains(text(),'DSL')]'.</msg>
+<status status="PASS" starttime="20201208 17:56:08.525" endtime="20201208 17:56:08.621"></status>
+</kw>
+<kw name="Click Element" library="SeleniumLibrary">
+<doc>Click element identified by ``locator``.</doc>
+<arguments>
+<arg>xpath=//span[@class="mps-label-text" and contains(text(),'${mps_label}')]</arg>
+</arguments>
+<msg timestamp="20201208 17:56:08.622" level="INFO">Clicking element 'xpath=//span[@class="mps-label-text" and contains(text(),'DSL')]'.</msg>
+<status status="PASS" starttime="20201208 17:56:08.622" endtime="20201208 17:56:09.129"></status>
+</kw>
+<kw name="Wait for calculator" library="mainkeyword">
+<kw name="Capture Page Screenshot" library="SeleniumLibrary">
+<doc>Takes screenshot of the current page and embeds it into log file.</doc>
+<msg timestamp="20201208 17:56:11.727" level="INFO" html="yes">&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td colspan="3"&gt;&lt;a href="selenium-screenshot-93.png"&gt;&lt;img src="selenium-screenshot-93.png" width="800px"&gt;&lt;/a&gt;</msg>
+<status status="PASS" starttime="20201208 17:56:09.130" endtime="20201208 17:56:11.728"></status>
+</kw>
+<kw name="Get Element Count" library="SeleniumLibrary">
+<doc>Returns number of elements matching ``locator``.</doc>
+<arguments>
+<arg>xpath=//div[@class="calculator-headline" and contains(text(),'Internet+Telefon')]</arg>
+</arguments>
+<assign>
+<var>${elm_present}</var>
+</assign>
+<msg timestamp="20201208 17:56:12.704" level="INFO">${elm_present} = 1</msg>
+<status status="PASS" starttime="20201208 17:56:11.731" endtime="20201208 17:56:12.705"></status>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<arguments>
+<arg>'${elm_present}' &gt;= '1'</arg>
+<arg>Sleep</arg>
+<arg>10s</arg>
+</arguments>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>10s</arg>
+</arguments>
+<msg timestamp="20201208 17:56:22.711" level="INFO">Slept 10 seconds</msg>
+<status status="PASS" starttime="20201208 17:56:12.708" endtime="20201208 17:56:22.711"></status>
+</kw>
+<status status="PASS" starttime="20201208 17:56:12.706" endtime="20201208 17:56:22.712"></status>
 </kw>
 <kw name="Sleep" library="BuiltIn">
 <doc>Pauses the test executed for the given time.</doc>
 <arguments>
-<arg>120s</arg>
+<arg>5s</arg>
 </arguments>
-<msg timestamp="20200831 14:52:11.668" level="INFO">Slept 2 minutes</msg>
-<status status="PASS" starttime="20200831 14:50:11.663" endtime="20200831 14:52:11.668"></status>
+<msg timestamp="20201208 17:56:27.715" level="INFO">Slept 5 seconds</msg>
+<status status="PASS" starttime="20201208 17:56:22.713" endtime="20201208 17:56:27.715"></status>
 </kw>
-<kw name="Split String" library="String">
-<doc>Splits the ``string`` using ``separator`` as a delimiter string.</doc>
+<status status="PASS" starttime="20201208 17:56:09.129" endtime="20201208 17:56:27.716"></status>
+</kw>
+<kw name="Capture Page Screenshot" library="SeleniumLibrary">
+<doc>Takes screenshot of the current page and embeds it into log file.</doc>
+<msg timestamp="20201208 17:56:28.236" level="INFO" html="yes">&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td colspan="3"&gt;&lt;a href="selenium-screenshot-94.png"&gt;&lt;img src="selenium-screenshot-94.png" width="800px"&gt;&lt;/a&gt;</msg>
+<status status="PASS" starttime="20201208 17:56:27.716" endtime="20201208 17:56:28.237"></status>
+</kw>
+<status status="PASS" starttime="20201208 17:56:05.518" endtime="20201208 17:56:28.237"></status>
+</kw>
+<kw name="AND I enter 030 for my area code" library="mainkeyword">
+<kw name="Input Text" library="SeleniumLibrary">
+<doc>Types the given ``text`` into text field identified by ``locator``.</doc>
 <arguments>
-<arg>string, separator=SSIM Y:, max_split=-1</arg>
+<arg>xpath=//input[@name="phonePrefix"]</arg>
+<arg>${areacode}</arg>
 </arguments>
-<status status="PASS" starttime="20200831 14:52:11.669" endtime="20200831 14:52:11.670"></status>
+<msg timestamp="20201208 17:56:28.239" level="INFO">Typing text '030' into text field 'xpath=//input[@name="phonePrefix"]'.</msg>
+<status status="PASS" starttime="20201208 17:56:28.238" endtime="20201208 17:56:28.321"></status>
 </kw>
-<kw name="Fetch From Right" library="String">
-<doc>Returns contents of the ``string`` after the last occurrence of ``marker``.</doc>
+<status status="PASS" starttime="20201208 17:56:28.238" endtime="20201208 17:56:28.321"></status>
+</kw>
+<kw name="AND I select the 100 Mbit/s bandwidth option" library="mainkeyword">
+<kw name="Wait Until Element Is Visible" library="SeleniumLibrary">
+<doc>Waits until element ``locator`` is visible.</doc>
 <arguments>
-<arg>${outputs}</arg>
-<arg>SSIM Y:</arg>
+<arg>xpath=//div[@class="calc-toggles toggle-two-lines"]</arg>
+</arguments>
+<status status="PASS" starttime="20201208 17:56:28.322" endtime="20201208 17:56:28.397"></status>
+</kw>
+<kw name="Click Element" library="SeleniumLibrary">
+<doc>Click element identified by ``locator``.</doc>
+<arguments>
+<arg>xpath=//div[@class="calc-toggles toggle-two-lines"]</arg>
+</arguments>
+<msg timestamp="20201208 17:56:28.398" level="INFO">Clicking element 'xpath=//div[@class="calc-toggles toggle-two-lines"]'.</msg>
+<status status="PASS" starttime="20201208 17:56:28.397" endtime="20201208 17:56:28.709"></status>
+</kw>
+<kw name="Set Focus To Element" library="SeleniumLibrary">
+<doc>Sets focus to element identified by ``locator``.</doc>
+<arguments>
+<arg>xpath=(//div[@class="calc-toggles toggle-two-lines"]/label)[3]</arg>
+</arguments>
+<status status="PASS" starttime="20201208 17:56:28.709" endtime="20201208 17:56:28.732"></status>
+</kw>
+<kw name="Click Element" library="SeleniumLibrary">
+<doc>Click element identified by ``locator``.</doc>
+<arguments>
+<arg>xpath=(//div[@class="calc-toggles toggle-two-lines"]/label)[3]</arg>
+</arguments>
+<msg timestamp="20201208 17:56:28.733" level="INFO">Clicking element 'xpath=(//div[@class="calc-toggles toggle-two-lines"]/label)[3]'.</msg>
+<status status="PASS" starttime="20201208 17:56:28.733" endtime="20201208 17:56:28.990"></status>
+</kw>
+<kw name="Capture Page Screenshot" library="SeleniumLibrary">
+<doc>Takes screenshot of the current page and embeds it into log file.</doc>
+<msg timestamp="20201208 17:56:29.342" level="INFO" html="yes">&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td colspan="3"&gt;&lt;a href="selenium-screenshot-95.png"&gt;&lt;img src="selenium-screenshot-95.png" width="800px"&gt;&lt;/a&gt;</msg>
+<status status="PASS" starttime="20201208 17:56:28.991" endtime="20201208 17:56:29.342"></status>
+</kw>
+<status status="PASS" starttime="20201208 17:56:28.321" endtime="20201208 17:56:29.343"></status>
+</kw>
+<kw name="AND I click the Jetzt vergleichen button" library="mainkeyword">
+<kw name="Click Element" library="SeleniumLibrary">
+<doc>Click element identified by ``locator``.</doc>
+<arguments>
+<arg>xpath=(//button[@class="page-button" and contains(text(),'Jetzt vergleichen')])[4]</arg>
+</arguments>
+<msg timestamp="20201208 17:56:29.345" level="INFO">Clicking element 'xpath=(//button[@class="page-button" and contains(text(),'Jetzt vergleichen')])[4]'.</msg>
+<status status="PASS" starttime="20201208 17:56:29.344" endtime="20201208 17:56:39.334"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>5s</arg>
+</arguments>
+<msg timestamp="20201208 17:56:44.335" level="INFO">Slept 5 seconds</msg>
+<status status="PASS" starttime="20201208 17:56:39.334" endtime="20201208 17:56:44.336"></status>
+</kw>
+<kw name="Capture Page Screenshot" library="SeleniumLibrary">
+<doc>Takes screenshot of the current page and embeds it into log file.</doc>
+<msg timestamp="20201208 17:56:44.609" level="INFO" html="yes">&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td colspan="3"&gt;&lt;a href="selenium-screenshot-96.png"&gt;&lt;img src="selenium-screenshot-96.png" width="800px"&gt;&lt;/a&gt;</msg>
+<status status="PASS" starttime="20201208 17:56:44.336" endtime="20201208 17:56:44.609"></status>
+</kw>
+<status status="PASS" starttime="20201208 17:56:29.343" endtime="20201208 17:56:44.610"></status>
+</kw>
+<status status="PASS" starttime="20201208 17:55:33.011" endtime="20201208 17:56:44.610"></status>
+</kw>
+<kw name="WHEN I display the tariff Result List page" library="mainkeyword">
+<kw name="Page Should Contain Element" library="SeleniumLibrary">
+<doc>Verifies that element ``locator`` is found on the current page.</doc>
+<arguments>
+<arg>xpath=//h1[@class="pt-xl-4 pt-2 pt-xl-0 text-center text-xl-left"]</arg>
+</arguments>
+<msg timestamp="20201208 17:56:44.653" level="INFO">Current page contains element 'xpath=//h1[@class="pt-xl-4 pt-2 pt-xl-0 text-center text-xl-left"]'.</msg>
+<status status="PASS" starttime="20201208 17:56:44.613" endtime="20201208 17:56:44.653"></status>
+</kw>
+<kw name="Get Text" library="SeleniumLibrary">
+<doc>Returns the text value of element identified by ``locator``.</doc>
+<arguments>
+<arg>xpath=//h1[@class="pt-xl-4 pt-2 pt-xl-0 text-center text-xl-left"]</arg>
 </arguments>
 <assign>
-<var>${result}</var>
+<var>${tarrifcount}</var>
 </assign>
-<msg timestamp="20200831 14:52:11.671" level="INFO">${result} = ffmpeg version 4.2.1-static https://johnvansickle.com/ffmpeg/  Copyright (c) 2000-2019 the FFmpeg developers
-  built with gcc 6.3.0 (Debian 6.3.0-18+deb9u1) 20170516
-  configuration: --enable-gpl --en...</msg>
-<status status="PASS" starttime="20200831 14:52:11.670" endtime="20200831 14:52:11.671"></status>
+<msg timestamp="20201208 17:56:44.696" level="INFO">${tarrifcount} = Verivox-Tarifempfehlung</msg>
+<status status="PASS" starttime="20201208 17:56:44.654" endtime="20201208 17:56:44.697"></status>
 </kw>
-<kw name="Split String" library="String">
-<doc>Splits the ``string`` using ``separator`` as a delimiter string.</doc>
+<status status="PASS" starttime="20201208 17:56:44.612" endtime="20201208 17:56:44.697"></status>
+</kw>
+<kw name="THEN I should see the total number of available tariffs listed in the Ermittelte Tarife section WHEN I scroll to the end of the Result List page" library="mainkeyword">
+<kw name="Get Text" library="SeleniumLibrary">
+<doc>Returns the text value of element identified by ``locator``.</doc>
 <arguments>
-<arg>${result}</arg>
-<arg>${SPACE}</arg>
+<arg>xpath=//h2[@class="summary-tariff"]</arg>
 </arguments>
 <assign>
-<var>@{value}</var>
+<var>${tarrifcount}</var>
 </assign>
-<msg timestamp="20200831 14:52:11.673" level="INFO">@{value} = [ ffmpeg | version | 4.2.1-static | https://johnvansickle.com/ffmpeg/ |  | Copyright | (c) | 2000-2019 | the | FFmpeg | developers
- |  | built | with | gcc | 6.3.0 | (Debian | 6.3.0-18+deb9u1) | 20170...</msg>
-<status status="PASS" starttime="20200831 14:52:11.672" endtime="20200831 14:52:11.674"></status>
+<msg timestamp="20201208 17:56:44.724" level="INFO">${tarrifcount} = 76 Tarife</msg>
+<status status="PASS" starttime="20201208 17:56:44.698" endtime="20201208 17:56:44.724"></status>
+</kw>
+<kw name="Get Element Count" library="SeleniumLibrary">
+<doc>Returns number of elements matching ``locator``.</doc>
+<arguments>
+<arg>xpath=//div[@class="col-sm comparison-rank font-weight-bold ml-md-1"]</arg>
+</arguments>
+<assign>
+<var>${count}</var>
+</assign>
+<msg timestamp="20201208 17:56:44.752" level="INFO">${count} = 20</msg>
+<status status="PASS" starttime="20201208 17:56:44.725" endtime="20201208 17:56:44.752"></status>
+</kw>
+<kw name="Scroll Page To Location" library="mainkeyword">
+<arguments>
+<arg>0</arg>
+<arg>6000</arg>
+</arguments>
+<kw name="Execute Javascript" library="SeleniumLibrary">
+<doc>Executes the given JavaScript code with possible arguments.</doc>
+<arguments>
+<arg>window.scrollTo(${x_location},${y_location})</arg>
+</arguments>
+<msg timestamp="20201208 17:56:44.759" level="INFO">Executing JavaScript:
+window.scrollTo(0,6000)
+Without any arguments.</msg>
+<status status="PASS" starttime="20201208 17:56:44.753" endtime="20201208 17:56:44.769"></status>
+</kw>
+<status status="PASS" starttime="20201208 17:56:44.752" endtime="20201208 17:56:44.769"></status>
+</kw>
+<kw name="Capture Page Screenshot" library="SeleniumLibrary">
+<doc>Takes screenshot of the current page and embeds it into log file.</doc>
+<msg timestamp="20201208 17:56:45.019" level="INFO" html="yes">&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td colspan="3"&gt;&lt;a href="selenium-screenshot-97.png"&gt;&lt;img src="selenium-screenshot-97.png" width="800px"&gt;&lt;/a&gt;</msg>
+<status status="PASS" starttime="20201208 17:56:44.770" endtime="20201208 17:56:45.019"></status>
+</kw>
+<status status="PASS" starttime="20201208 17:56:44.697" endtime="20201208 17:56:45.020"></status>
+</kw>
+<kw name="THEN I should see only the first 20 tariffs displayed" library="mainkeyword">
+<kw name="Get Text" library="SeleniumLibrary">
+<doc>Returns the text value of element identified by ``locator``.</doc>
+<arguments>
+<arg>xpath=//button[@class="btn btn-primary text-uppercase"]</arg>
+</arguments>
+<assign>
+<var>${pagecount}</var>
+</assign>
+<msg timestamp="20201208 17:56:45.047" level="INFO">${pagecount} = 20 WEITERE TARIFE LADEN</msg>
+<status status="PASS" starttime="20201208 17:56:45.022" endtime="20201208 17:56:45.047"></status>
+</kw>
+<kw name="Get Element Count" library="SeleniumLibrary">
+<doc>Returns number of elements matching ``locator``.</doc>
+<arguments>
+<arg>xpath=//div[@class="col-sm comparison-rank font-weight-bold ml-md-1"]</arg>
+</arguments>
+<assign>
+<var>${count}</var>
+</assign>
+<msg timestamp="20201208 17:56:45.064" level="INFO">${count} = 20</msg>
+<status status="PASS" starttime="20201208 17:56:45.047" endtime="20201208 17:56:45.064"></status>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<arguments>
+<arg>${count} == 20</arg>
+<arg>Run Keywords</arg>
+<arg>PassedExecution</arg>
+</arguments>
+<kw name="Run Keywords" library="BuiltIn">
+<doc>Executes all the given keywords in a sequence.</doc>
+<arguments>
+<arg>PassedExecution</arg>
+</arguments>
+<kw name="PassedExecution" library="mainkeyword">
+<kw name="Set Suite Variable" library="BuiltIn">
+<doc>Makes a variable available everywhere within the scope of the current suite.</doc>
+<arguments>
+<arg>${Executionsstep}</arg>
+<arg>1</arg>
+</arguments>
+<msg timestamp="20201208 17:56:45.067" level="INFO">${Executionsstep} = 1</msg>
+<status status="PASS" starttime="20201208 17:56:45.066" endtime="20201208 17:56:45.067"></status>
 </kw>
 <kw name="Log" library="BuiltIn">
 <doc>Logs the given message with the given level.</doc>
 <arguments>
-<arg>${outputs}</arg>
+<arg>${Executionsstep}</arg>
 </arguments>
-<msg timestamp="20200831 14:52:11.676" level="INFO">ffmpeg version 4.2.1-static https://johnvansickle.com/ffmpeg/  Copyright (c) 2000-2019 the FFmpeg developers
-  built with gcc 6.3.0 (Debian 6.3.0-18+deb9u1) 20170516
-  configuration: --enable-gpl --enable-version3 --enable-static --disable-debug --disable-ffplay --disable-indev=sndio --disable-outdev=sndio --cc=gcc-6 --enable-fontconfig --enable-frei0r --enable-gnutls --enable-gmp --enable-libgme --enable-gray --enable-libaom --enable-libfribidi --enable-libass --enable-libvmaf --enable-libfreetype --enable-libmp3lame --enable-libopencore-amrnb --enable-libopencore-amrwb --enable-libopenjpeg --enable-librubberband --enable-libsoxr --enable-libspeex --enable-libsrt --enable-libvorbis --enable-libopus --enable-libtheora --enable-libvidstab --enable-libvo-amrwbenc --enable-libvpx --enable-libwebp --enable-libx264 --enable-libx265 --enable-libxml2 --enable-libdav1d --enable-libxvid --enable-libzvbi --enable-libzimg
-  libavutil      56. 31.100 / 56. 31.100
-  libavcodec     58. 54.100 / 58. 54.100
-  libavformat    58. 29.100 / 58. 29.100
-  libavdevice    58.  8.100 / 58.  8.100
-  libavfilter     7. 57.100 /  7. 57.100
-  libswscale      5.  5.100 /  5.  5.100
-  libswresample   3.  5.100 /  3.  5.100
-  libpostproc    55.  5.100 / 55.  5.100
-/opt/robotframework/artifact_store/old_clip.mp4: No such file or directory</msg>
-<status status="PASS" starttime="20200831 14:52:11.675" endtime="20200831 14:52:11.676"></status>
+<msg timestamp="20201208 17:56:45.067" level="INFO">1</msg>
+<status status="PASS" starttime="20201208 17:56:45.067" endtime="20201208 17:56:45.068"></status>
+</kw>
+<kw name="Capture Page Screenshot" library="SeleniumLibrary">
+<doc>Takes screenshot of the current page and embeds it into log file.</doc>
+<msg timestamp="20201208 17:56:45.328" level="INFO" html="yes">&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td colspan="3"&gt;&lt;a href="selenium-screenshot-98.png"&gt;&lt;img src="selenium-screenshot-98.png" width="800px"&gt;&lt;/a&gt;</msg>
+<status status="PASS" starttime="20201208 17:56:45.068" endtime="20201208 17:56:45.328"></status>
+</kw>
+<status status="PASS" starttime="20201208 17:56:45.066" endtime="20201208 17:56:45.329"></status>
+</kw>
+<status status="PASS" starttime="20201208 17:56:45.065" endtime="20201208 17:56:45.329"></status>
+</kw>
+<status status="PASS" starttime="20201208 17:56:45.064" endtime="20201208 17:56:45.329"></status>
+</kw>
+<kw name="Capture Page Screenshot" library="SeleniumLibrary">
+<doc>Takes screenshot of the current page and embeds it into log file.</doc>
+<msg timestamp="20201208 17:56:45.572" level="INFO" html="yes">&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td colspan="3"&gt;&lt;a href="selenium-screenshot-99.png"&gt;&lt;img src="selenium-screenshot-99.png" width="800px"&gt;&lt;/a&gt;</msg>
+<status status="PASS" starttime="20201208 17:56:45.329" endtime="20201208 17:56:45.573"></status>
+</kw>
+<status status="PASS" starttime="20201208 17:56:45.020" endtime="20201208 17:56:45.573"></status>
+</kw>
+<kw name="WHEN I click on the button labeled 20 weitere Tarife laden" library="mainkeyword">
+<kw name="Click Element" library="SeleniumLibrary">
+<doc>Click element identified by ``locator``.</doc>
+<arguments>
+<arg>xpath=//button[@class="btn btn-primary text-uppercase"]</arg>
+</arguments>
+<msg timestamp="20201208 17:56:45.575" level="INFO">Clicking element 'xpath=//button[@class="btn btn-primary text-uppercase"]'.</msg>
+<status status="PASS" starttime="20201208 17:56:45.575" endtime="20201208 17:56:45.970"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>5s</arg>
+</arguments>
+<msg timestamp="20201208 17:56:50.973" level="INFO">Slept 5 seconds</msg>
+<status status="PASS" starttime="20201208 17:56:45.971" endtime="20201208 17:56:50.975"></status>
+</kw>
+<status status="PASS" starttime="20201208 17:56:45.574" endtime="20201208 17:56:50.976"></status>
+</kw>
+<kw name="THEN I should see the next 20 tariffs displayed" library="mainkeyword">
+<kw name="Scroll Page To Location" library="mainkeyword">
+<arguments>
+<arg>0</arg>
+<arg>36000</arg>
+</arguments>
+<kw name="Execute Javascript" library="SeleniumLibrary">
+<doc>Executes the given JavaScript code with possible arguments.</doc>
+<arguments>
+<arg>window.scrollTo(${x_location},${y_location})</arg>
+</arguments>
+<msg timestamp="20201208 17:56:50.984" level="INFO">Executing JavaScript:
+window.scrollTo(0,36000)
+Without any arguments.</msg>
+<status status="PASS" starttime="20201208 17:56:50.980" endtime="20201208 17:56:50.999"></status>
+</kw>
+<status status="PASS" starttime="20201208 17:56:50.979" endtime="20201208 17:56:50.999"></status>
+</kw>
+<kw name="Get Element Count" library="SeleniumLibrary">
+<doc>Returns number of elements matching ``locator``.</doc>
+<arguments>
+<arg>xpath=//div[@class="col-sm comparison-rank font-weight-bold ml-md-1"]</arg>
+</arguments>
+<assign>
+<var>${count}</var>
+</assign>
+<msg timestamp="20201208 17:56:51.020" level="INFO">${count} = 40</msg>
+<status status="PASS" starttime="20201208 17:56:51.000" endtime="20201208 17:56:51.021"></status>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<arguments>
+<arg>${count} == 40</arg>
+<arg>Run Keywords</arg>
+<arg>PassedExecution</arg>
+</arguments>
+<kw name="Run Keywords" library="BuiltIn">
+<doc>Executes all the given keywords in a sequence.</doc>
+<arguments>
+<arg>PassedExecution</arg>
+</arguments>
+<kw name="PassedExecution" library="mainkeyword">
+<kw name="Set Suite Variable" library="BuiltIn">
+<doc>Makes a variable available everywhere within the scope of the current suite.</doc>
+<arguments>
+<arg>${Executionsstep}</arg>
+<arg>1</arg>
+</arguments>
+<msg timestamp="20201208 17:56:51.023" level="INFO">${Executionsstep} = 1</msg>
+<status status="PASS" starttime="20201208 17:56:51.022" endtime="20201208 17:56:51.023"></status>
 </kw>
 <kw name="Log" library="BuiltIn">
 <doc>Logs the given message with the given level.</doc>
 <arguments>
-<arg>${result}</arg>
+<arg>${Executionsstep}</arg>
 </arguments>
-<msg timestamp="20200831 14:52:11.678" level="INFO">ffmpeg version 4.2.1-static https://johnvansickle.com/ffmpeg/  Copyright (c) 2000-2019 the FFmpeg developers
-  built with gcc 6.3.0 (Debian 6.3.0-18+deb9u1) 20170516
-  configuration: --enable-gpl --enable-version3 --enable-static --disable-debug --disable-ffplay --disable-indev=sndio --disable-outdev=sndio --cc=gcc-6 --enable-fontconfig --enable-frei0r --enable-gnutls --enable-gmp --enable-libgme --enable-gray --enable-libaom --enable-libfribidi --enable-libass --enable-libvmaf --enable-libfreetype --enable-libmp3lame --enable-libopencore-amrnb --enable-libopencore-amrwb --enable-libopenjpeg --enable-librubberband --enable-libsoxr --enable-libspeex --enable-libsrt --enable-libvorbis --enable-libopus --enable-libtheora --enable-libvidstab --enable-libvo-amrwbenc --enable-libvpx --enable-libwebp --enable-libx264 --enable-libx265 --enable-libxml2 --enable-libdav1d --enable-libxvid --enable-libzvbi --enable-libzimg
-  libavutil      56. 31.100 / 56. 31.100
-  libavcodec     58. 54.100 / 58. 54.100
-  libavformat    58. 29.100 / 58. 29.100
-  libavdevice    58.  8.100 / 58.  8.100
-  libavfilter     7. 57.100 /  7. 57.100
-  libswscale      5.  5.100 /  5.  5.100
-  libswresample   3.  5.100 /  3.  5.100
-  libpostproc    55.  5.100 / 55.  5.100
-/opt/robotframework/artifact_store/old_clip.mp4: No such file or directory</msg>
-<status status="PASS" starttime="20200831 14:52:11.677" endtime="20200831 14:52:11.678"></status>
+<msg timestamp="20201208 17:56:51.023" level="INFO">1</msg>
+<status status="PASS" starttime="20201208 17:56:51.023" endtime="20201208 17:56:51.023"></status>
+</kw>
+<kw name="Capture Page Screenshot" library="SeleniumLibrary">
+<doc>Takes screenshot of the current page and embeds it into log file.</doc>
+<msg timestamp="20201208 17:56:51.267" level="INFO" html="yes">&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td colspan="3"&gt;&lt;a href="selenium-screenshot-100.png"&gt;&lt;img src="selenium-screenshot-100.png" width="800px"&gt;&lt;/a&gt;</msg>
+<status status="PASS" starttime="20201208 17:56:51.027" endtime="20201208 17:56:51.268"></status>
+</kw>
+<status status="PASS" starttime="20201208 17:56:51.022" endtime="20201208 17:56:51.268"></status>
+</kw>
+<status status="PASS" starttime="20201208 17:56:51.021" endtime="20201208 17:56:51.268"></status>
+</kw>
+<status status="PASS" starttime="20201208 17:56:51.021" endtime="20201208 17:56:51.268"></status>
+</kw>
+<kw name="Capture Page Screenshot" library="SeleniumLibrary">
+<doc>Takes screenshot of the current page and embeds it into log file.</doc>
+<msg timestamp="20201208 17:56:51.501" level="INFO" html="yes">&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td colspan="3"&gt;&lt;a href="selenium-screenshot-101.png"&gt;&lt;img src="selenium-screenshot-101.png" width="800px"&gt;&lt;/a&gt;</msg>
+<status status="PASS" starttime="20201208 17:56:51.268" endtime="20201208 17:56:51.501"></status>
+</kw>
+<status status="PASS" starttime="20201208 17:56:50.978" endtime="20201208 17:56:51.501"></status>
+</kw>
+<kw name="AND I can continue to load any additional tariffs until all tariffs have been displayed" library="mainkeyword">
+<kw name="Click Element" library="SeleniumLibrary">
+<doc>Click element identified by ``locator``.</doc>
+<arguments>
+<arg>xpath=//button[@class="btn btn-primary text-uppercase"]</arg>
+</arguments>
+<msg timestamp="20201208 17:56:51.503" level="INFO">Clicking element 'xpath=//button[@class="btn btn-primary text-uppercase"]'.</msg>
+<status status="PASS" starttime="20201208 17:56:51.502" endtime="20201208 17:56:51.837"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>5s</arg>
+</arguments>
+<msg timestamp="20201208 17:56:56.839" level="INFO">Slept 5 seconds</msg>
+<status status="PASS" starttime="20201208 17:56:51.838" endtime="20201208 17:56:56.840"></status>
+</kw>
+<kw name="Scroll Page To Location" library="mainkeyword">
+<arguments>
+<arg>0</arg>
+<arg>36000</arg>
+</arguments>
+<kw name="Execute Javascript" library="SeleniumLibrary">
+<doc>Executes the given JavaScript code with possible arguments.</doc>
+<arguments>
+<arg>window.scrollTo(${x_location},${y_location})</arg>
+</arguments>
+<msg timestamp="20201208 17:56:56.845" level="INFO">Executing JavaScript:
+window.scrollTo(0,36000)
+Without any arguments.</msg>
+<status status="PASS" starttime="20201208 17:56:56.842" endtime="20201208 17:56:56.871"></status>
+</kw>
+<status status="PASS" starttime="20201208 17:56:56.841" endtime="20201208 17:56:56.872"></status>
+</kw>
+<kw name="Get Element Count" library="SeleniumLibrary">
+<doc>Returns number of elements matching ``locator``.</doc>
+<arguments>
+<arg>xpath=//div[@class="col-sm comparison-rank font-weight-bold ml-md-1"]</arg>
+</arguments>
+<assign>
+<var>${count}</var>
+</assign>
+<msg timestamp="20201208 17:56:56.927" level="INFO">${count} = 60</msg>
+<status status="PASS" starttime="20201208 17:56:56.872" endtime="20201208 17:56:56.928"></status>
+</kw>
+<kw name="Page Should Contain Element" library="SeleniumLibrary">
+<doc>Verifies that element ``locator`` is found on the current page.</doc>
+<arguments>
+<arg>xpath=//button[@class="btn btn-primary text-uppercase"]</arg>
+</arguments>
+<msg timestamp="20201208 17:56:56.942" level="INFO">Current page contains element 'xpath=//button[@class="btn btn-primary text-uppercase"]'.</msg>
+<status status="PASS" starttime="20201208 17:56:56.928" endtime="20201208 17:56:56.943"></status>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<arguments>
+<arg>${count} == 60</arg>
+<arg>Run Keywords</arg>
+<arg>PassedExecution</arg>
+</arguments>
+<kw name="Run Keywords" library="BuiltIn">
+<doc>Executes all the given keywords in a sequence.</doc>
+<arguments>
+<arg>PassedExecution</arg>
+</arguments>
+<kw name="PassedExecution" library="mainkeyword">
+<kw name="Set Suite Variable" library="BuiltIn">
+<doc>Makes a variable available everywhere within the scope of the current suite.</doc>
+<arguments>
+<arg>${Executionsstep}</arg>
+<arg>1</arg>
+</arguments>
+<msg timestamp="20201208 17:56:56.945" level="INFO">${Executionsstep} = 1</msg>
+<status status="PASS" starttime="20201208 17:56:56.945" endtime="20201208 17:56:56.946"></status>
 </kw>
 <kw name="Log" library="BuiltIn">
 <doc>Logs the given message with the given level.</doc>
 <arguments>
-<arg>@{value}[${0}]</arg>
+<arg>${Executionsstep}</arg>
 </arguments>
-<msg timestamp="20200831 14:52:11.680" level="INFO">ffmpeg</msg>
-<status status="PASS" starttime="20200831 14:52:11.679" endtime="20200831 14:52:11.680"></status>
+<msg timestamp="20201208 17:56:56.946" level="INFO">1</msg>
+<status status="PASS" starttime="20201208 17:56:56.946" endtime="20201208 17:56:56.946"></status>
 </kw>
-<kw name="Should Be True" library="BuiltIn">
-<doc>Fails if the given condition is not true.</doc>
-<arguments>
-<arg>@{value}[${0}] &gt;= 0.95</arg>
-<arg>Return code greater than .95</arg>
-</arguments>
-<msg timestamp="20200831 14:52:11.682" level="FAIL">Evaluating expression 'ffmpeg &gt;= 0.95' failed: NameError: name 'ffmpeg' is not defined</msg>
-<status status="FAIL" starttime="20200831 14:52:11.681" endtime="20200831 14:52:11.683"></status>
+<kw name="Capture Page Screenshot" library="SeleniumLibrary">
+<doc>Takes screenshot of the current page and embeds it into log file.</doc>
+<msg timestamp="20201208 17:56:57.269" level="INFO" html="yes">&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td colspan="3"&gt;&lt;a href="selenium-screenshot-102.png"&gt;&lt;img src="selenium-screenshot-102.png" width="800px"&gt;&lt;/a&gt;</msg>
+<status status="PASS" starttime="20201208 17:56:56.947" endtime="20201208 17:56:57.270"></status>
+</kw>
+<status status="PASS" starttime="20201208 17:56:56.944" endtime="20201208 17:56:57.270"></status>
+</kw>
+<status status="PASS" starttime="20201208 17:56:56.944" endtime="20201208 17:56:57.270"></status>
+</kw>
+<status status="PASS" starttime="20201208 17:56:56.943" endtime="20201208 17:56:57.270"></status>
+</kw>
+<kw name="Capture Page Screenshot" library="SeleniumLibrary">
+<doc>Takes screenshot of the current page and embeds it into log file.</doc>
+<msg timestamp="20201208 17:56:57.568" level="INFO" html="yes">&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td colspan="3"&gt;&lt;a href="selenium-screenshot-103.png"&gt;&lt;img src="selenium-screenshot-103.png" width="800px"&gt;&lt;/a&gt;</msg>
+<status status="PASS" starttime="20201208 17:56:57.271" endtime="20201208 17:56:57.568"></status>
+</kw>
+<status status="PASS" starttime="20201208 17:56:51.502" endtime="20201208 17:56:57.570"></status>
 </kw>
 <tags>
-<tag>api</tag>
-<tag>apistreaming</tag>
-<tag>clip</tag>
+<tag>DSL</tag>
+<tag>practice</tag>
+<tag>smoke</tag>
 </tags>
-<status status="FAIL" starttime="20200831 14:50:11.185" endtime="20200831 14:52:11.684" critical="yes">Evaluating expression 'ffmpeg &gt;= 0.95' failed: NameError: name 'ffmpeg' is not defined</status>
+<status status="PASS" starttime="20201208 17:55:32.907" endtime="20201208 17:56:57.570" critical="yes"></status>
 </test>
-<status status="FAIL" starttime="20200831 14:46:44.787" endtime="20200831 14:52:11.686"></status>
+<test id="s1-s1-s1-t3" name="Scenario 3: Verify offer details for a selected tariff">
+<kw name="GIVEN the same tariff calculation criteria from scenario 1" library="mainkeyword">
+<kw name="GIVEN I can open www.verivox.de" library="mainkeyword">
+<kw name="Log To Console" library="BuiltIn">
+<doc>Logs the given message to the console.</doc>
+<arguments>
+<arg>${BROWSER}</arg>
+</arguments>
+<status status="PASS" starttime="20201208 17:56:57.576" endtime="20201208 17:56:57.577"></status>
+</kw>
+<kw name="Open chrome browser" library="mainkeyword">
+<kw name="Evaluate" library="BuiltIn">
+<doc>Evaluates the given expression in Python and returns the results.</doc>
+<arguments>
+<arg>sys.modules['selenium.webdriver'].ChromeOptions()</arg>
+<arg>sys, selenium.webdriver</arg>
+</arguments>
+<assign>
+<var>${chrome_options}</var>
+</assign>
+<msg timestamp="20201208 17:56:57.583" level="INFO">${chrome_options} = &lt;selenium.webdriver.chrome.options.Options object at 0x7f632d9f8390&gt;</msg>
+<status status="PASS" starttime="20201208 17:56:57.580" endtime="20201208 17:56:57.583"></status>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<arguments>
+<arg>credentials_enable_service=${false}</arg>
+</arguments>
+<assign>
+<var>${prefs}</var>
+</assign>
+<msg timestamp="20201208 17:56:57.585" level="INFO">${prefs} = {'credentials_enable_service': False}</msg>
+<status status="PASS" starttime="20201208 17:56:57.584" endtime="20201208 17:56:57.585"></status>
+</kw>
+<kw name="Call Method" library="BuiltIn">
+<doc>Calls the named method of the given object with the provided arguments.</doc>
+<arguments>
+<arg>${chrome_options}</arg>
+<arg>add_experimental_option</arg>
+<arg>prefs</arg>
+<arg>${prefs}</arg>
+</arguments>
+<status status="PASS" starttime="20201208 17:56:57.586" endtime="20201208 17:56:57.587"></status>
+</kw>
+<kw name="Call Method" library="BuiltIn">
+<doc>Calls the named method of the given object with the provided arguments.</doc>
+<arguments>
+<arg>${chrome_options}</arg>
+<arg>add_argument</arg>
+<arg>--disable-infobars</arg>
+</arguments>
+<status status="PASS" starttime="20201208 17:56:57.587" endtime="20201208 17:56:57.591"></status>
+</kw>
+<kw name="Create Webdriver" library="SeleniumLibrary">
+<doc>Creates an instance of Selenium WebDriver.</doc>
+<arguments>
+<arg>Chrome</arg>
+<arg>chrome_options=${chrome_options}</arg>
+</arguments>
+<msg timestamp="20201208 17:56:57.592" level="INFO">Creating an instance of the Chrome WebDriver.</msg>
+<status status="PASS" starttime="20201208 17:56:57.592" endtime="20201208 17:57:02.671"></status>
+</kw>
+<kw name="Open Browser" library="SeleniumLibrary">
+<doc>Opens a new browser instance to the given ``url``.</doc>
+<arguments>
+<arg>${url}</arg>
+<arg>${BROWSER}</arg>
+</arguments>
+<msg timestamp="20201208 17:57:02.684" level="INFO">Opening browser 'firefox' to base url 'http://www.verivox.de'.</msg>
+<status status="PASS" starttime="20201208 17:57:02.673" endtime="20201208 17:57:25.140"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>5s</arg>
+</arguments>
+<msg timestamp="20201208 17:57:30.175" level="INFO">Slept 5 seconds</msg>
+<status status="PASS" starttime="20201208 17:57:25.158" endtime="20201208 17:57:30.176"></status>
+</kw>
+<kw name="Capture Page Screenshot" library="SeleniumLibrary">
+<doc>Takes screenshot of the current page and embeds it into log file.</doc>
+<msg timestamp="20201208 17:57:30.577" level="INFO" html="yes">&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td colspan="3"&gt;&lt;a href="selenium-screenshot-104.png"&gt;&lt;img src="selenium-screenshot-104.png" width="800px"&gt;&lt;/a&gt;</msg>
+<status status="PASS" starttime="20201208 17:57:30.178" endtime="20201208 17:57:30.578"></status>
+</kw>
+<kw name="Accept cookies" library="mainkeyword">
+<kw name="Set Focus To Element" library="SeleniumLibrary">
+<doc>Sets focus to element identified by ``locator``.</doc>
+<arguments>
+<arg>xpath=//button[@class="gdpr-button gdpr-accept-all first-layer"]</arg>
+</arguments>
+<status status="PASS" starttime="20201208 17:57:30.581" endtime="20201208 17:57:30.652"></status>
+</kw>
+<kw name="Page Should Contain Element" library="SeleniumLibrary">
+<doc>Verifies that element ``locator`` is found on the current page.</doc>
+<arguments>
+<arg>xpath=//button[@class="gdpr-button gdpr-accept-all first-layer"]</arg>
+</arguments>
+<assign>
+<var>${Result}</var>
+</assign>
+<msg timestamp="20201208 17:57:30.698" level="INFO">Current page contains element 'xpath=//button[@class="gdpr-button gdpr-accept-all first-layer"]'.</msg>
+<msg timestamp="20201208 17:57:30.698" level="INFO">${Result} = None</msg>
+<status status="PASS" starttime="20201208 17:57:30.653" endtime="20201208 17:57:30.698"></status>
+</kw>
+<kw name="Run Keyword Unless" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments if ``condition`` is false.</doc>
+<arguments>
+<arg>'${RESULT}'=='PASS'</arg>
+<arg>Click Element</arg>
+<arg>xpath=//button[@class="gdpr-button gdpr-accept-all first-layer"]</arg>
+</arguments>
+<kw name="Click Element" library="SeleniumLibrary">
+<doc>Click element identified by ``locator``.</doc>
+<arguments>
+<arg>xpath=//button[@class="gdpr-button gdpr-accept-all first-layer"]</arg>
+</arguments>
+<msg timestamp="20201208 17:57:30.703" level="INFO">Clicking element 'xpath=//button[@class="gdpr-button gdpr-accept-all first-layer"]'.</msg>
+<status status="PASS" starttime="20201208 17:57:30.703" endtime="20201208 17:57:31.098"></status>
+</kw>
+<status status="PASS" starttime="20201208 17:57:30.699" endtime="20201208 17:57:31.098"></status>
+</kw>
+<status status="PASS" starttime="20201208 17:57:30.578" endtime="20201208 17:57:31.099"></status>
+</kw>
+<status status="PASS" starttime="20201208 17:56:57.577" endtime="20201208 17:57:31.099"></status>
+</kw>
+<status status="PASS" starttime="20201208 17:56:57.575" endtime="20201208 17:57:31.099"></status>
+</kw>
+<kw name="WHEN I navigate to the DSL calculator page" library="mainkeyword">
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>3s</arg>
+</arguments>
+<msg timestamp="20201208 17:57:34.104" level="INFO">Slept 3 seconds</msg>
+<status status="PASS" starttime="20201208 17:57:31.100" endtime="20201208 17:57:34.106"></status>
+</kw>
+<kw name="Page Should Contain Element" library="SeleniumLibrary">
+<doc>Verifies that element ``locator`` is found on the current page.</doc>
+<arguments>
+<arg>xpath=//span[@class="mps-label-text" and contains(text(),'DSL')]</arg>
+</arguments>
+<msg timestamp="20201208 17:57:34.292" level="INFO">Current page contains element 'xpath=//span[@class="mps-label-text" and contains(text(),'DSL')]'.</msg>
+<status status="PASS" starttime="20201208 17:57:34.113" endtime="20201208 17:57:34.293"></status>
+</kw>
+<kw name="Click Element" library="SeleniumLibrary">
+<doc>Click element identified by ``locator``.</doc>
+<arguments>
+<arg>xpath=//span[@class="mps-label-text" and contains(text(),'${mps_label}')]</arg>
+</arguments>
+<msg timestamp="20201208 17:57:34.304" level="INFO">Clicking element 'xpath=//span[@class="mps-label-text" and contains(text(),'DSL')]'.</msg>
+<status status="PASS" starttime="20201208 17:57:34.302" endtime="20201208 17:57:35.019"></status>
+</kw>
+<kw name="Wait for calculator" library="mainkeyword">
+<kw name="Capture Page Screenshot" library="SeleniumLibrary">
+<doc>Takes screenshot of the current page and embeds it into log file.</doc>
+<msg timestamp="20201208 17:57:36.617" level="INFO" html="yes">&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td colspan="3"&gt;&lt;a href="selenium-screenshot-105.png"&gt;&lt;img src="selenium-screenshot-105.png" width="800px"&gt;&lt;/a&gt;</msg>
+<status status="PASS" starttime="20201208 17:57:35.021" endtime="20201208 17:57:36.621"></status>
+</kw>
+<kw name="Get Element Count" library="SeleniumLibrary">
+<doc>Returns number of elements matching ``locator``.</doc>
+<arguments>
+<arg>xpath=//div[@class="calculator-headline" and contains(text(),'Internet+Telefon')]</arg>
+</arguments>
+<assign>
+<var>${elm_present}</var>
+</assign>
+<msg timestamp="20201208 17:57:36.984" level="INFO">${elm_present} = 1</msg>
+<status status="PASS" starttime="20201208 17:57:36.622" endtime="20201208 17:57:36.984"></status>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<arguments>
+<arg>'${elm_present}' &gt;= '1'</arg>
+<arg>Sleep</arg>
+<arg>10s</arg>
+</arguments>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>10s</arg>
+</arguments>
+<msg timestamp="20201208 17:57:47.049" level="INFO">Slept 10 seconds</msg>
+<status status="PASS" starttime="20201208 17:57:37.039" endtime="20201208 17:57:47.049"></status>
+</kw>
+<status status="PASS" starttime="20201208 17:57:36.998" endtime="20201208 17:57:47.050"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>5s</arg>
+</arguments>
+<msg timestamp="20201208 17:57:52.054" level="INFO">Slept 5 seconds</msg>
+<status status="PASS" starttime="20201208 17:57:47.050" endtime="20201208 17:57:52.054"></status>
+</kw>
+<status status="PASS" starttime="20201208 17:57:35.020" endtime="20201208 17:57:52.060"></status>
+</kw>
+<kw name="Capture Page Screenshot" library="SeleniumLibrary">
+<doc>Takes screenshot of the current page and embeds it into log file.</doc>
+<msg timestamp="20201208 17:57:52.569" level="INFO" html="yes">&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td colspan="3"&gt;&lt;a href="selenium-screenshot-106.png"&gt;&lt;img src="selenium-screenshot-106.png" width="800px"&gt;&lt;/a&gt;</msg>
+<status status="PASS" starttime="20201208 17:57:52.060" endtime="20201208 17:57:52.569"></status>
+</kw>
+<status status="PASS" starttime="20201208 17:57:31.099" endtime="20201208 17:57:52.570"></status>
+</kw>
+<kw name="AND I enter 030 for my area code" library="mainkeyword">
+<kw name="Input Text" library="SeleniumLibrary">
+<doc>Types the given ``text`` into text field identified by ``locator``.</doc>
+<arguments>
+<arg>xpath=//input[@name="phonePrefix"]</arg>
+<arg>${areacode}</arg>
+</arguments>
+<msg timestamp="20201208 17:57:52.576" level="INFO">Typing text '030' into text field 'xpath=//input[@name="phonePrefix"]'.</msg>
+<status status="PASS" starttime="20201208 17:57:52.570" endtime="20201208 17:57:52.665"></status>
+</kw>
+<status status="PASS" starttime="20201208 17:57:52.570" endtime="20201208 17:57:52.666"></status>
+</kw>
+<kw name="AND I select the 100 Mbit/s bandwidth option" library="mainkeyword">
+<kw name="Wait Until Element Is Visible" library="SeleniumLibrary">
+<doc>Waits until element ``locator`` is visible.</doc>
+<arguments>
+<arg>xpath=//div[@class="calc-toggles toggle-two-lines"]</arg>
+</arguments>
+<status status="PASS" starttime="20201208 17:57:52.667" endtime="20201208 17:57:52.720"></status>
+</kw>
+<kw name="Click Element" library="SeleniumLibrary">
+<doc>Click element identified by ``locator``.</doc>
+<arguments>
+<arg>xpath=//div[@class="calc-toggles toggle-two-lines"]</arg>
+</arguments>
+<msg timestamp="20201208 17:57:52.721" level="INFO">Clicking element 'xpath=//div[@class="calc-toggles toggle-two-lines"]'.</msg>
+<status status="PASS" starttime="20201208 17:57:52.720" endtime="20201208 17:57:53.005"></status>
+</kw>
+<kw name="Set Focus To Element" library="SeleniumLibrary">
+<doc>Sets focus to element identified by ``locator``.</doc>
+<arguments>
+<arg>xpath=(//div[@class="calc-toggles toggle-two-lines"]/label)[3]</arg>
+</arguments>
+<status status="PASS" starttime="20201208 17:57:53.005" endtime="20201208 17:57:53.033"></status>
+</kw>
+<kw name="Click Element" library="SeleniumLibrary">
+<doc>Click element identified by ``locator``.</doc>
+<arguments>
+<arg>xpath=(//div[@class="calc-toggles toggle-two-lines"]/label)[3]</arg>
+</arguments>
+<msg timestamp="20201208 17:57:53.034" level="INFO">Clicking element 'xpath=(//div[@class="calc-toggles toggle-two-lines"]/label)[3]'.</msg>
+<status status="PASS" starttime="20201208 17:57:53.034" endtime="20201208 17:57:53.300"></status>
+</kw>
+<kw name="Capture Page Screenshot" library="SeleniumLibrary">
+<doc>Takes screenshot of the current page and embeds it into log file.</doc>
+<msg timestamp="20201208 17:57:54.170" level="INFO" html="yes">&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td colspan="3"&gt;&lt;a href="selenium-screenshot-107.png"&gt;&lt;img src="selenium-screenshot-107.png" width="800px"&gt;&lt;/a&gt;</msg>
+<status status="PASS" starttime="20201208 17:57:53.300" endtime="20201208 17:57:54.171"></status>
+</kw>
+<status status="PASS" starttime="20201208 17:57:52.666" endtime="20201208 17:57:54.171"></status>
+</kw>
+<kw name="AND I click the Jetzt vergleichen button" library="mainkeyword">
+<kw name="Click Element" library="SeleniumLibrary">
+<doc>Click element identified by ``locator``.</doc>
+<arguments>
+<arg>xpath=(//button[@class="page-button" and contains(text(),'Jetzt vergleichen')])[4]</arg>
+</arguments>
+<msg timestamp="20201208 17:57:54.172" level="INFO">Clicking element 'xpath=(//button[@class="page-button" and contains(text(),'Jetzt vergleichen')])[4]'.</msg>
+<status status="PASS" starttime="20201208 17:57:54.172" endtime="20201208 17:58:10.453"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>5s</arg>
+</arguments>
+<msg timestamp="20201208 17:58:15.458" level="INFO">Slept 5 seconds</msg>
+<status status="PASS" starttime="20201208 17:58:10.454" endtime="20201208 17:58:15.460"></status>
+</kw>
+<kw name="Capture Page Screenshot" library="SeleniumLibrary">
+<doc>Takes screenshot of the current page and embeds it into log file.</doc>
+<msg timestamp="20201208 17:58:16.197" level="INFO" html="yes">&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td colspan="3"&gt;&lt;a href="selenium-screenshot-108.png"&gt;&lt;img src="selenium-screenshot-108.png" width="800px"&gt;&lt;/a&gt;</msg>
+<status status="PASS" starttime="20201208 17:58:15.464" endtime="20201208 17:58:16.198"></status>
+</kw>
+<status status="PASS" starttime="20201208 17:57:54.171" endtime="20201208 17:58:16.199"></status>
+</kw>
+<status status="PASS" starttime="20201208 17:56:57.574" endtime="20201208 17:58:16.199"></status>
+</kw>
+<kw name="AND I display the tariff result list page" library="mainkeyword">
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>3s</arg>
+</arguments>
+<msg timestamp="20201208 17:58:19.208" level="INFO">Slept 3 seconds</msg>
+<status status="PASS" starttime="20201208 17:58:16.205" endtime="20201208 17:58:19.209"></status>
+</kw>
+<kw name="Capture Page Screenshot" library="SeleniumLibrary">
+<doc>Takes screenshot of the current page and embeds it into log file.</doc>
+<msg timestamp="20201208 17:58:19.602" level="INFO" html="yes">&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td colspan="3"&gt;&lt;a href="selenium-screenshot-109.png"&gt;&lt;img src="selenium-screenshot-109.png" width="800px"&gt;&lt;/a&gt;</msg>
+<status status="PASS" starttime="20201208 17:58:19.212" endtime="20201208 17:58:19.605"></status>
+</kw>
+<kw name="Page Should Contain Element" library="SeleniumLibrary">
+<doc>Verifies that element ``locator`` is found on the current page.</doc>
+<arguments>
+<arg>xpath=//h1[@class="pt-xl-4 pt-2 pt-xl-0 text-center text-xl-left"]</arg>
+</arguments>
+<msg timestamp="20201208 17:58:19.647" level="INFO">Current page contains element 'xpath=//h1[@class="pt-xl-4 pt-2 pt-xl-0 text-center text-xl-left"]'.</msg>
+<status status="PASS" starttime="20201208 17:58:19.606" endtime="20201208 17:58:19.647"></status>
+</kw>
+<status status="PASS" starttime="20201208 17:58:16.201" endtime="20201208 17:58:19.648"></status>
+</kw>
+<kw name="WHEN I click on any Zum Angebot button to select a tariff offer" library="mainkeyword">
+<kw name="Click Element" library="SeleniumLibrary">
+<doc>Click element identified by ``locator``.</doc>
+<arguments>
+<arg>xpath=(//a[@class="button-primary w-100"])[${tariffid}]</arg>
+</arguments>
+<msg timestamp="20201208 17:58:19.649" level="INFO">Clicking element 'xpath=(//a[@class="button-primary w-100"])[6]'.</msg>
+<status status="PASS" starttime="20201208 17:58:19.649" endtime="20201208 17:58:23.961"></status>
+</kw>
+<kw name="Capture Page Screenshot" library="SeleniumLibrary">
+<doc>Takes screenshot of the current page and embeds it into log file.</doc>
+<msg timestamp="20201208 17:58:24.359" level="INFO" html="yes">&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td colspan="3"&gt;&lt;a href="selenium-screenshot-110.png"&gt;&lt;img src="selenium-screenshot-110.png" width="800px"&gt;&lt;/a&gt;</msg>
+<status status="PASS" starttime="20201208 17:58:23.961" endtime="20201208 17:58:24.359"></status>
+</kw>
+<status status="PASS" starttime="20201208 17:58:19.648" endtime="20201208 17:58:24.360"></status>
+</kw>
+<kw name="THEN I should see the corresponding offer page for the selected tariff" library="mainkeyword">
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>5s</arg>
+</arguments>
+<msg timestamp="20201208 17:58:29.362" level="INFO">Slept 5 seconds</msg>
+<status status="PASS" starttime="20201208 17:58:24.361" endtime="20201208 17:58:29.363"></status>
+</kw>
+<kw name="Page Should Contain Element" library="SeleniumLibrary">
+<doc>Verifies that element ``locator`` is found on the current page.</doc>
+<arguments>
+<arg>xpath=(//*[@class="centered-content effective-price-wrapper"])[1]</arg>
+</arguments>
+<msg timestamp="20201208 17:58:29.524" level="INFO">Current page contains element 'xpath=(//*[@class="centered-content effective-price-wrapper"])[1]'.</msg>
+<status status="PASS" starttime="20201208 17:58:29.363" endtime="20201208 17:58:29.524"></status>
+</kw>
+<kw name="Get Text" library="SeleniumLibrary">
+<doc>Returns the text value of element identified by ``locator``.</doc>
+<arguments>
+<arg>xpath=(//*[@class="centered-content effective-price-wrapper"])[1]</arg>
+</arguments>
+<assign>
+<var>${price}</var>
+</assign>
+<msg timestamp="20201208 17:58:29.755" level="INFO">${price} = 21,22 €
+Durchschnittspreis/Monat</msg>
+<status status="PASS" starttime="20201208 17:58:29.525" endtime="20201208 17:58:29.755"></status>
+</kw>
+<kw name="Get Text" library="SeleniumLibrary">
+<doc>Returns the text value of element identified by ``locator``.</doc>
+<arguments>
+<arg>xpath=//h3[@class="group-header"]</arg>
+</arguments>
+<assign>
+<var>${offer}</var>
+</assign>
+<msg timestamp="20201208 17:58:29.934" level="INFO">${offer} = Red Internet &amp; Phone 100 Cable</msg>
+<status status="PASS" starttime="20201208 17:58:29.756" endtime="20201208 17:58:29.934"></status>
+</kw>
+<kw name="Get Count" library="BuiltIn">
+<doc>Returns and logs how many times ``item2`` is found from ``item1``.</doc>
+<arguments>
+<arg>${price}</arg>
+<arg>${priceset}</arg>
+</arguments>
+<assign>
+<var>${count}</var>
+</assign>
+<msg timestamp="20201208 17:58:29.942" level="INFO">Item found from the first item 1 time</msg>
+<msg timestamp="20201208 17:58:29.942" level="INFO">${count} = 1</msg>
+<status status="PASS" starttime="20201208 17:58:29.937" endtime="20201208 17:58:29.942"></status>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<arguments>
+<arg>${count}==1</arg>
+<arg>Run Keywords</arg>
+<arg>PassedExecution</arg>
+<arg>ELSE</arg>
+<arg>Fail</arg>
+<arg>failed Execution</arg>
+</arguments>
+<kw name="Run Keywords" library="BuiltIn">
+<doc>Executes all the given keywords in a sequence.</doc>
+<arguments>
+<arg>PassedExecution</arg>
+</arguments>
+<kw name="PassedExecution" library="mainkeyword">
+<kw name="Set Suite Variable" library="BuiltIn">
+<doc>Makes a variable available everywhere within the scope of the current suite.</doc>
+<arguments>
+<arg>${Executionsstep}</arg>
+<arg>1</arg>
+</arguments>
+<msg timestamp="20201208 17:58:29.948" level="INFO">${Executionsstep} = 1</msg>
+<status status="PASS" starttime="20201208 17:58:29.947" endtime="20201208 17:58:29.948"></status>
+</kw>
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>${Executionsstep}</arg>
+</arguments>
+<msg timestamp="20201208 17:58:29.954" level="INFO">1</msg>
+<status status="PASS" starttime="20201208 17:58:29.949" endtime="20201208 17:58:29.954"></status>
+</kw>
+<kw name="Capture Page Screenshot" library="SeleniumLibrary">
+<doc>Takes screenshot of the current page and embeds it into log file.</doc>
+<msg timestamp="20201208 17:58:30.312" level="INFO" html="yes">&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td colspan="3"&gt;&lt;a href="selenium-screenshot-111.png"&gt;&lt;img src="selenium-screenshot-111.png" width="800px"&gt;&lt;/a&gt;</msg>
+<status status="PASS" starttime="20201208 17:58:29.957" endtime="20201208 17:58:30.313"></status>
+</kw>
+<status status="PASS" starttime="20201208 17:58:29.946" endtime="20201208 17:58:30.313"></status>
+</kw>
+<status status="PASS" starttime="20201208 17:58:29.944" endtime="20201208 17:58:30.313"></status>
+</kw>
+<status status="PASS" starttime="20201208 17:58:29.943" endtime="20201208 17:58:30.313"></status>
+</kw>
+<kw name="Get Count" library="BuiltIn">
+<doc>Returns and logs how many times ``item2`` is found from ``item1``.</doc>
+<arguments>
+<arg>${offer}</arg>
+<arg>${offertext}</arg>
+</arguments>
+<assign>
+<var>${count}</var>
+</assign>
+<msg timestamp="20201208 17:58:30.314" level="INFO">Item found from the first item 1 time</msg>
+<msg timestamp="20201208 17:58:30.314" level="INFO">${count} = 1</msg>
+<status status="PASS" starttime="20201208 17:58:30.313" endtime="20201208 17:58:30.314"></status>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<arguments>
+<arg>${count}==1</arg>
+<arg>Run Keywords</arg>
+<arg>PassedExecution</arg>
+<arg>ELSE</arg>
+<arg>Fail</arg>
+<arg>failed Execution</arg>
+</arguments>
+<kw name="Run Keywords" library="BuiltIn">
+<doc>Executes all the given keywords in a sequence.</doc>
+<arguments>
+<arg>PassedExecution</arg>
+</arguments>
+<kw name="PassedExecution" library="mainkeyword">
+<kw name="Set Suite Variable" library="BuiltIn">
+<doc>Makes a variable available everywhere within the scope of the current suite.</doc>
+<arguments>
+<arg>${Executionsstep}</arg>
+<arg>1</arg>
+</arguments>
+<msg timestamp="20201208 17:58:30.318" level="INFO">${Executionsstep} = 1</msg>
+<status status="PASS" starttime="20201208 17:58:30.317" endtime="20201208 17:58:30.318"></status>
+</kw>
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>${Executionsstep}</arg>
+</arguments>
+<msg timestamp="20201208 17:58:30.319" level="INFO">1</msg>
+<status status="PASS" starttime="20201208 17:58:30.318" endtime="20201208 17:58:30.319"></status>
+</kw>
+<kw name="Capture Page Screenshot" library="SeleniumLibrary">
+<doc>Takes screenshot of the current page and embeds it into log file.</doc>
+<msg timestamp="20201208 17:58:30.799" level="INFO" html="yes">&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td colspan="3"&gt;&lt;a href="selenium-screenshot-112.png"&gt;&lt;img src="selenium-screenshot-112.png" width="800px"&gt;&lt;/a&gt;</msg>
+<status status="PASS" starttime="20201208 17:58:30.320" endtime="20201208 17:58:30.799"></status>
+</kw>
+<status status="PASS" starttime="20201208 17:58:30.316" endtime="20201208 17:58:30.800"></status>
+</kw>
+<status status="PASS" starttime="20201208 17:58:30.315" endtime="20201208 17:58:30.800"></status>
+</kw>
+<status status="PASS" starttime="20201208 17:58:30.315" endtime="20201208 17:58:30.800"></status>
+</kw>
+<status status="PASS" starttime="20201208 17:58:24.360" endtime="20201208 17:58:30.800"></status>
+</kw>
+<tags>
+<tag>DSL</tag>
+<tag>practice</tag>
+<tag>smoke</tag>
+</tags>
+<status status="PASS" starttime="20201208 17:56:57.573" endtime="20201208 17:58:30.802" critical="yes"></status>
+</test>
+<doc>A test suite with a three test for Verivox</doc>
+<status status="PASS" starttime="20201208 17:54:18.021" endtime="20201208 17:58:30.840"></status>
 </suite>
-<status status="FAIL" starttime="20200831 14:46:44.777" endtime="20200831 14:52:11.693"></status>
+<status status="PASS" starttime="20201208 17:54:18.015" endtime="20201208 17:58:30.850"></status>
 </suite>
-<status status="FAIL" starttime="20200831 14:46:44.738" endtime="20200831 14:52:11.699"></status>
+<status status="PASS" starttime="20201208 17:54:17.887" endtime="20201208 17:58:30.855"></status>
 </suite>
 <statistics>
 <total>
-<stat pass="1" fail="2">Critical Tests</stat>
-<stat pass="1" fail="2">All Tests</stat>
+<stat pass="3" fail="0">Critical Tests</stat>
+<stat pass="3" fail="0">All Tests</stat>
 </total>
 <tag>
-<stat pass="1" fail="2">api</stat>
-<stat pass="1" fail="2">apistreaming</stat>
-<stat pass="1" fail="2">clip</stat>
+<stat pass="3" fail="0">DSL</stat>
+<stat pass="3" fail="0">practice</stat>
+<stat pass="3" fail="0">smoke</stat>
 </tag>
 <suite>
-<stat pass="1" fail="2" id="s1" name="Tests">Tests</stat>
-<stat pass="1" fail="2" id="s1-s1" name="Apirobot">Tests.Apirobot</stat>
-<stat pass="1" fail="2" id="s1-s1-s1" name="Event-Processing">Tests.Apirobot.Event-Processing</stat>
+<stat pass="3" fail="0" id="s1" name="Tests">Tests</stat>
+<stat pass="3" fail="0" id="s1-s1" name="Mainwebsite">Tests.Mainwebsite</stat>
+<stat pass="3" fail="0" id="s1-s1-s1" name="Verivox">Tests.Mainwebsite.Verivox</stat>
 </suite>
 </statistics>
 <errors>

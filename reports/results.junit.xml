@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="Tests" tests="3" errors="0" failures="2" skipped="0" time="326.961">
-<testcase classname="Tests.Apirobot.Event-Processing" name="Event-process and verify the massage response" time="5.583">
-<failure message="6 != 0" type="AssertionError"></failure>
+<testsuite name="Tests" tests="3" errors="0" failures="0" skipped="0" time="252.968">
+<testcase classname="Tests.Mainwebsite.Verivox" name="Scenario 1: Verify the DSL calculator" time="73.955">
 </testcase>
-<testcase classname="Tests.Apirobot.Event-Processing" name="new and old video clip validation using api testing" time="200.563">
+<testcase classname="Tests.Mainwebsite.Verivox" name="Scenario 2: Load multiple tariff result pages" time="84.663">
 </testcase>
-<testcase classname="Tests.Apirobot.Event-Processing" name="Cross validation of mp4 videos" time="120.499">
-<failure message="Evaluating expression 'ffmpeg &gt;= 0.95' failed: NameError: name 'ffmpeg' is not defined" type="AssertionError"></failure>
+<testcase classname="Tests.Mainwebsite.Verivox" name="Scenario 3: Verify offer details for a selected tariff" time="93.229">
 </testcase>
 </testsuite>

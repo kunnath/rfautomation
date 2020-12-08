@@ -15,11 +15,10 @@ RUN yum install --enableplugin fastestmirror -y openssh-server.x86_64 xorg-x11-x
     tar -xf /tmp/ffmpeg.tar.xz &&\
     mv ffmpeg-${FFMPEG_VERSION}-${FFMPEG_ARCH}-static/ffmpeg ffmpeg-${FFMPEG_VERSION}-${FFMPEG_ARCH}-static/ffprobe /usr/bin &&\
     rm -rf /tmp/ffmpeg.tar.xz ffmpeg-${FFMPEG_VERSION}-${FFMPEG_ARCH}-static
-
 ### Uncomment following two lines if having external test libraries:
 COPY requirements.txt .
 RUN dnf install --setopt=install_weak_deps=False --assumeyes git python3-tkinter tk-devel android-tools npm xcompmgr &&\
-    npm install -g appium --unsafe-perm=true --allow-root &&\
+    # npm install -g appium --unsafe-perm=true --allow-root &&\
     pip3 install --upgrade pip &&\
     python3 -m pip install --no-cache-dir -r requirements.txt
 
