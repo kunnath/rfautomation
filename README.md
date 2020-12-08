@@ -42,3 +42,4 @@ From Visual Studio Code, you can run one of the following tasks
 
 # verivox
 # verivox
+# verivox
