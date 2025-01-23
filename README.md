@@ -131,11 +131,3 @@ For additional support, please refer to the Docker and Robot Framework documenta
 License
 
 This project is licensed under the MIT License - see the LICENSE file for details.
-
-### Notes:
-- I added example images using the markdown syntax `![Image Alt Text](path/to/image)`.
-- Ensure that your images are in the correct directory (`images/`) or wherever you store your images. You can also use URLs if the images are hosted online.
-- Replace `images/example-image.png` and `images/streamlit-example.png` with the actual path where you store the image in your project.
-
-### Image in a GitHub Repo:
-If you plan to host your project on GitHub and want to display the image, the images need to be uploaded to your repository (in a folder like `images/` or similar).
