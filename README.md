@@ -1,6 +1,3 @@
-To add an image path in your README.md file, you need to reference the image using the markdown syntax. If you have an image stored locally or remotely, you can use the appropriate path. Here’s an example on how to integrate it into the README.md:
-
-Example with local images (assuming the image is in an images folder inside your project):
 
 # rfautomation
 This project provides an automated test suite using Robot Framework and Docker. It allows running Robot Framework tests in different environments (such as practice, dev, and production) with the option to select browsers like Chrome and Firefox.
@@ -41,7 +38,7 @@ export ROBOT_OPTIONS="-i practice -v env:test"
 
 	•	Run the tests with Docker:
 
-./rf_docker automation
+./rfdocker automation
 
 
 	3.	Run WebUI Testcases in Development Environment:
@@ -52,7 +49,7 @@ export ROBOT_OPTIONS="-i practice -v env:dev -v BROWSER:chrome"
 
 	•	Run the tests with Docker:
 
-./rf_docker automation
+./rfdocker automation
 
 Using Visual Studio Code
 
