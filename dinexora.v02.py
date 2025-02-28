@@ -21,6 +21,14 @@ for key in required_keys:
     if key not in st.session_state:
         st.session_state[key] = "" if "path" in key else False
 
+# URL Input Field
+record_url = st.text_input("Enter URL to record:", "https://example.com")
+
+# Open Browser Button
+if st.button("🌐 Open in Browser", key="open_browser_button"):
+    webbrowser.open(record_url)
+
+
 # ✅ **Step 1: Create or Open Existing Project**
 BASE_DIR = "./projects"
 os.makedirs(BASE_DIR, exist_ok=True)
