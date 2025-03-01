@@ -25,7 +25,6 @@ from langchain.chains import ConversationalRetrievalChain
 from langchain.memory import ConversationBufferMemory
 from langchain.prompts import PromptTemplate
 
-
 # ✅ MUST BE FIRST Streamlit command
 st.set_page_config(page_title="Manager Assistant", layout="wide")
 
@@ -36,11 +35,7 @@ logging.basicConfig(filename=log_file_path, level=logging.INFO, format="%(asctim
 # Streamlit UI
 st.title("🚀 AI-Powered Test Automation - Dinexora 🚀")
 #st.warning("⚠️ Please select a test suite and provide a manual file name before proceeding.")
-
- 
- 
- 
- ######BOT for the Manager#################           
+######BOT for the Manager#################           
 
 # 🔍 Fix NLTK Error
 nltk.download("averaged_perceptron_tagger")
@@ -141,11 +136,8 @@ for key in required_keys:
     if key not in st.session_state:
         st.session_state[key] = "" if "path" in key else False
 
-
-
 # URL Input Field
 record_url = st.text_input("Enter URL to record:", "https://example.com")
-
 
 # Open Browser in Normal Mode
 if st.button("🌐 Open in Normal Mode", key="open_normal_browser"):
@@ -216,8 +208,6 @@ if st.session_state["project_path"]:
         else:
             st.sidebar.error("⚠️ Please select or create a test suite.")
 
-
-
 # ✅ **Test Type Selection**
 st.sidebar.header("🛠️ Test Type Selection")
 test_type = st.sidebar.selectbox("Test Type", options=["Default", "automation", "perf", "mobile", "api", "manual"])
@@ -230,13 +220,11 @@ test_path = st.sidebar.text_input("Tests Path", "./tests")
 reports_path = st.sidebar.text_input("Reports Path", "./reports")
 metrics_file = os.path.abspath(os.path.join(reports_path, "metrics.html"))
 
-
 # ✅ Function to Read Uploaded File Content
 def read_uploaded_file(uploaded_file):
     if uploaded_file is not None:
         return uploaded_file.read().decode("utf-8")
     return ""
-
 
 # ✅ AI-Generated Test Cases
 def generate_robot_test_cases(file_content):
@@ -303,7 +291,6 @@ if st.sidebar.button("🤖 Start Robot Test Case Creation", key="start_robot_tes
             st.session_state["test_cases_generated"] = True
     else:
         st.error("⚠️ Please upload a test document first.")
-
 
 
 # ✅ **Start Manual Test Case Creation (Clears Old Robot Test Cases)**
@@ -399,7 +386,6 @@ if st.sidebar.button("📹 Start Test Recording"):
     st.success("Please install RoboRecorder and record your test flow.")
 
 
-
 # # Define the RoboRecorder Chrome Extension URL
 # extension_url = "https://chromewebstore.google.com/detail/robotcorder/ifiilbfgcemdapeibjfohnfpfmfblmpd?hl=en"
 
@@ -493,7 +479,6 @@ else:
     st.warning("⚠️ Please select or create a test suite and provide a valid file name before proceeding.")
 
 
-
 # ✅ **Display Reports**
 if st.session_state["suite_path"]:
     st.header("📊 Test Execution Reports")
@@ -509,5 +494,4 @@ if st.session_state["suite_path"]:
         selected_report = st.selectbox("📄 Select a Report:", list(existing_reports.keys()))
         with open(existing_reports[selected_report], "r", encoding="utf-8") as f:
             st.components.v1.html(f.read(), height=800, scrolling=True)
- 
  
