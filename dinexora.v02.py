@@ -33,7 +33,7 @@ log_file_path = "test_execution.log"
 logging.basicConfig(filename=log_file_path, level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
 
 # Streamlit UI
-st.title("🚀 AI-Powered Test Automation - Dinexora 🚀")
+st.title("AI-Powered Test Automation - Dinexora ")
 #st.warning("⚠️ Please select a test suite and provide a manual file name before proceeding.")
 ######BOT for the Manager#################           
 
