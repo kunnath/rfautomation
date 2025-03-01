@@ -8,10 +8,14 @@ import webbrowser
 import fitz  # PyMuPDF for PDF extraction
 import docx  # Required for DOCX file reading
 import pandas as pd  # Required for test case table conversion
+import platform
 
 # Setup logging
 log_file_path = "test_execution.log"
 logging.basicConfig(filename=log_file_path, level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
+
+# Streamlit UI
+st.title("🚀 AI-Powered Test Automation - Dinexora 🚀")
 
 # ✅ Initialize Session State Keys
 required_keys = ["project_path", "suite_path", "test_creation_started", "manual_test_creation_started", 
@@ -24,9 +28,24 @@ for key in required_keys:
 # URL Input Field
 record_url = st.text_input("Enter URL to record:", "https://example.com")
 
-# Open Browser Button
-if st.button("🌐 Open in Browser", key="open_browser_button"):
-    webbrowser.open(record_url)
+
+# Open Browser in Normal Mode
+if st.button("🌐 Open in Normal Mode", key="open_normal_browser"):
+    webbrowser.open(record_url)  # ✅ Opens the default browser normally
+    st.success("Opened in normal mode.")
+
+# Open Browser in Incognito Mode
+if st.button("🕶️ Open in Incognito Mode", key="open_incognito_browser"):
+    if platform.system() == "Windows":
+        subprocess.run(["cmd.exe", "/c", "start", "chrome", "--incognito", record_url])
+    elif platform.system() == "Darwin":  # ✅ macOS Fix
+        subprocess.Popen(["/Applications/Google Chrome.app/Contents/MacOS/Google Chrome", "--incognito", record_url])
+    elif platform.system() == "Linux":
+        subprocess.run(["google-chrome", "--incognito", record_url])
+    else:
+        st.error("Unsupported OS for launching incognito mode.")
+
+    st.success("Opened in incognito mode.")
 
 
 # ✅ **Step 1: Create or Open Existing Project**
@@ -252,17 +271,44 @@ if st.session_state.get("manual_test_cases_generated", False):
 
 
 
-# ✅ **Test Recording**
+# Define the RoboRecorder Chrome Extension URL
+extension_url = "https://chromewebstore.google.com/detail/robotcorder/ifiilbfgcemdapeibjfohnfpfmfblmpd?hl=en"
+
 st.sidebar.header("🎥 Test Recorder")
 
 if st.sidebar.button("📹 Start Test Recording"):
-    webbrowser.open("https://chromewebstore.google.com/detail/robotcorder/ifiilbfgcemdapeibjfohnfpfmfblmpd?hl=en")
+    webbrowser.open(extension_url)  # ✅ Opens the default web browser normally
     st.success("Please install RoboRecorder and record your test flow.")
+
+
+
+# # Define the RoboRecorder Chrome Extension URL
+# extension_url = "https://chromewebstore.google.com/detail/robotcorder/ifiilbfgcemdapeibjfohnfpfmfblmpd?hl=en"
+
+# st.sidebar.header("🎥 Test Recorder")
+
+# if st.sidebar.button("📹 Start Test Recording"):
+#     if platform.system() == "Windows":
+#         subprocess.run(["cmd.exe", "/c", "start", "chrome", "--incognito", extension_url])
+#     elif platform.system() == "Darwin":  # ✅ macOS Fix
+#         subprocess.Popen(["/Applications/Google Chrome.app/Contents/MacOS/Google Chrome", "--incognito", extension_url])
+#     elif platform.system() == "Linux":
+#         subprocess.run(["google-chrome", "--incognito", extension_url])
+#     else:
+#         st.error("Unsupported OS for launching incognito mode.")
+
+#     st.success("Please install RoboRecorder and record your test flow.")
 
 # ✅ Run Test Execution
 if st.button("🚀 Run Test", key="run_test"):
     st.write(f"Running `{test_type}` tests in {browser} browser...")
-    command = ["robot", "--loglevel", "DEBUG", "--outputDir", reports_path, "--variable", f"BROWSER:{browser}"]
+    command = [
+        "robot",
+        "--loglevel", "DEBUG",
+        "--outputDir", reports_path,
+        "--variable", f"BROWSER:{browser}",
+        "--variable", "OPTIONS:--incognito"  # Corrected syntax
+    ]
     
     if robot_options.strip():
         command.extend(robot_options.split())
