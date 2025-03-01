@@ -9,6 +9,25 @@ import fitz  # PyMuPDF for PDF extraction
 import docx  # Required for DOCX file reading
 import pandas as pd  # Required for test case table conversion
 import platform
+from langchain.document_loaders import DirectoryLoader
+from langchain.embeddings import OpenAIEmbeddings
+from langchain.vectorstores import FAISS
+from langchain.chains import RetrievalQA
+from langchain.text_splitter import RecursiveCharacterTextSplitter
+from langchain.embeddings import HuggingFaceEmbeddings
+import nltk
+from langchain_community.document_loaders import PDFPlumberLoader
+from langchain_experimental.text_splitter import SemanticChunker
+from langchain_community.embeddings import HuggingFaceEmbeddings
+from langchain_community.vectorstores import FAISS
+from langchain_community.llms import Ollama
+from langchain.chains import ConversationalRetrievalChain
+from langchain.memory import ConversationBufferMemory
+from langchain.prompts import PromptTemplate
+
+
+# ✅ MUST BE FIRST Streamlit command
+st.set_page_config(page_title="Manager Assistant", layout="wide")
 
 # Setup logging
 log_file_path = "test_execution.log"
@@ -16,7 +35,104 @@ logging.basicConfig(filename=log_file_path, level=logging.INFO, format="%(asctim
 
 # Streamlit UI
 st.title("🚀 AI-Powered Test Automation - Dinexora 🚀")
+#st.warning("⚠️ Please select a test suite and provide a manual file name before proceeding.")
 
+ 
+ 
+ 
+ ######BOT for the Manager#################           
+
+# 🔍 Fix NLTK Error
+nltk.download("averaged_perceptron_tagger")
+
+# 📂 Set Fixed Storage for Uploaded Documents Inside `testing_docs/`
+TEMP_DIR = os.path.join(os.getcwd(), "testing_docs")
+os.makedirs(TEMP_DIR, exist_ok=True)  # ✅ Create folder if not exists
+
+# 🔒 **User Authentication**
+if "user_authenticated" not in st.session_state:
+    st.session_state.user_authenticated = False  # Default: Not logged in
+
+if not st.session_state.user_authenticated:
+    st.sidebar.title("🔑 Login to Access Chatbot")
+    username = st.sidebar.text_input("Username")
+    password = st.sidebar.text_input("Password", type="password")
+    
+    if st.sidebar.button("Login"):
+        # **Simple Hardcoded Authentication (Replace with DB or OAuth)**
+        if username == "manager" and password == "admin123":
+            st.session_state.user_authenticated = True
+            st.success("✅ Login Successful! You can now use the chatbot.")
+            st.rerun()
+        else:
+            st.error("❌ Incorrect username or password")
+
+# ✅ Show Content Only After Login
+if st.session_state.user_authenticated:
+    # **Main Page Layout**
+    col1, col2 = st.columns([3, 1])  # Chatbot (right), Other fields (left)
+
+    with col1:  # Main UI elements
+        st.title("QA 🧠 memory")
+        uploaded_files = st.file_uploader("Upload multiple PDF files", type="pdf", accept_multiple_files=True)
+
+        if uploaded_files:
+            all_docs = []
+
+            for uploaded_file in uploaded_files:
+                file_path = os.path.join(TEMP_DIR, uploaded_file.name)
+                with open(file_path, "wb") as f:
+                    f.write(uploaded_file.getvalue())
+
+                loader = PDFPlumberLoader(file_path)
+                docs = loader.load()
+                all_docs.extend(docs)
+
+            text_splitter = SemanticChunker(HuggingFaceEmbeddings())
+            documents = text_splitter.split_documents(all_docs)
+
+            embeddings = HuggingFaceEmbeddings()
+            vector_store = FAISS.from_documents(documents, embeddings)
+            retriever = vector_store.as_retriever(search_kwargs={"k": 5})
+
+            memory = ConversationBufferMemory(memory_key="chat_history", return_messages=True, output_key="answer")
+            llm = Ollama(model="deepseek-r1:1.5b")
+
+            conversational_qa = ConversationalRetrievalChain.from_llm(
+                llm=llm,
+                retriever=retriever,
+                memory=memory,
+                return_source_documents=True,
+                output_key="answer"
+            )
+
+    # **Chatbot in Top Right Corner**
+    with col2:
+        if "chatbot_open" not in st.session_state:
+            st.session_state.chatbot_open = False  # Default: Chatbot is closed
+
+        if st.button("💬 QA Chatbot)"):
+            st.session_state.chatbot_open = not st.session_state.chatbot_open  # Toggle chatbot window
+
+        if st.session_state.chatbot_open:
+            st.subheader("💬 Chat with RAGBot")
+            user_input = st.text_input("Ask your uploaded PDFs a question:")
+
+            if user_input:
+                with st.spinner("Sri thinking.."):
+                    response = conversational_qa.invoke({"question": user_input})
+                    st.success(response["answer"])
+
+                    # ✅ Now "Sources Used" is a normal section, NOT inside an expander
+                    st.write("📚 **Sources Used**:")
+                    for doc in response["source_documents"]:
+                        source = doc.metadata.get("source", "Unknown")
+                        st.write(f"- {source}")
+
+            # Button to close chatbot
+            if st.button("❌ Close Chatbot"):
+                st.session_state.chatbot_open = False             
+ 
 # ✅ Initialize Session State Keys
 required_keys = ["project_path", "suite_path", "test_creation_started", "manual_test_creation_started", 
                  "test_cases_generated", "generated_test_cases", "manual_test_cases_generated", "manual_test_cases"]
@@ -24,6 +140,8 @@ required_keys = ["project_path", "suite_path", "test_creation_started", "manual_
 for key in required_keys:
     if key not in st.session_state:
         st.session_state[key] = "" if "path" in key else False
+
+
 
 # URL Input Field
 record_url = st.text_input("Enter URL to record:", "https://example.com")
@@ -138,8 +256,8 @@ def generate_robot_test_cases(file_content):
         logging.error(f"Ollama API Error: {e}")
         return "⚠️ AI Processing Error."
     
-
-# ✅ Function to Generate **Manual Test Cases** Using AI
+    
+    # ✅ Function to Generate **Manual Test Cases** Using AI
 def generate_manual_test_cases(file_content):
     prompt = f"""
     You are a software testing expert. Generate detailed test cases for an application based on the following requirements:
@@ -332,6 +450,50 @@ if st.button("🚀 Run Test", key="run_test"):
     subprocess.run(metrics_command, check=True, text=True, capture_output=True)
     st.success("📈 Metrics report generated successfully!")
 
+
+# Function to list available test suites (directories)
+def get_test_suites(base_dir):
+    if os.path.exists(base_dir):
+        return [d for d in os.listdir(base_dir) if os.path.isdir(os.path.join(base_dir, d))]
+    return []
+
+# Get list of test suites dynamically
+available_suites = get_test_suites(BASE_DIR)
+
+# Allow user to select an existing suite or enter a new one
+selected_suite = st.selectbox("📁 Select or Create a Test Suite", available_suites + ["➕ Create New"], index=None)
+
+# If "Create New" is selected, allow user to enter a new suite name
+if selected_suite == "➕ Create New":
+    new_suite_name = st.text_input("Enter New Test Suite Name")
+    if new_suite_name:
+        selected_suite = new_suite_name  # Assign new suite name
+
+# Enter test case file name
+manual_file_name = st.text_input("Enter CSV File Name (e.g., test_cases.csv)")
+
+# Check if all inputs are provided before proceeding
+if BASE_DIR and selected_suite and manual_file_name:
+    suite_path = os.path.join(BASE_DIR, selected_suite)
+
+    # Create new test suite directory if it doesn't exist
+    if not os.path.exists(suite_path):
+        os.makedirs(suite_path)  # ✅ Create the new suite directory
+
+    csv_file_path = os.path.join(suite_path, manual_file_name)
+
+    if st.button("📂 Open Generated Test Case"):
+        if os.path.exists(csv_file_path):
+            df = pd.read_csv(csv_file_path)  # Load CSV
+            st.success("✅ Test cases loaded successfully!")
+            st.dataframe(df)  # Show CSV in table view
+        else:
+            st.error(f"⚠️ No test case file found at: {csv_file_path}")
+else:
+    st.warning("⚠️ Please select or create a test suite and provide a valid file name before proceeding.")
+
+
+
 # ✅ **Display Reports**
 if st.session_state["suite_path"]:
     st.header("📊 Test Execution Reports")
@@ -347,3 +509,5 @@ if st.session_state["suite_path"]:
         selected_report = st.selectbox("📄 Select a Report:", list(existing_reports.keys()))
         with open(existing_reports[selected_report], "r", encoding="utf-8") as f:
             st.components.v1.html(f.read(), height=800, scrolling=True)
+ 
+ 
