@@ -32,7 +32,9 @@ import numpy as np
 import logging
 import seaborn as sns
 from PIL import Image
-
+from docx import Document
+import io
+import speech_recognition as sr
 
 # ✅ MUST BE FIRST Streamlit command
 st.set_page_config(page_title="Dinexora virtual QA assistant ", layout="wide")
@@ -62,6 +64,30 @@ nltk.download("averaged_perceptron_tagger")
 # 📂 Set Fixed Storage for Uploaded Documents Inside `testing_docs/`
 TEMP_DIR = os.path.join(os.getcwd(), "testing_docs")
 os.makedirs(TEMP_DIR, exist_ok=True)  # ✅ Create folder if not exists
+
+
+# Function to recognize speech
+def recognize_speech():
+    recognizer = sr.Recognizer()
+    with sr.Microphone() as source:
+        st.write("🎤 Listening... Please speak now!")
+        recognizer.adjust_for_ambient_noise(source)  # Reduce background noise
+        try:
+            audio = recognizer.listen(source, timeout=10, phrase_time_limit=8)  # Increased timeout
+            query_text = recognizer.recognize_google(audio)
+            st.success(f"✅ Recognized Speech: {query_text}")
+            return query_text
+        except sr.WaitTimeoutError:
+            st.error("❌ No speech detected. Please try again.")
+            return None
+        except sr.UnknownValueError:
+            st.error("❌ Could not understand the audio. Please try again.")
+            return None
+        except sr.RequestError:
+            st.error("⚠️ Speech recognition service unavailable.")
+            return None
+
+
 
 # 🔒 **User Authentication**
 if "user_authenticated" not in st.session_state:
@@ -119,21 +145,28 @@ if st.session_state.user_authenticated:
                 return_source_documents=True,
                 output_key="answer"
             )
-
-    # **Chatbot in Top Right Corner**
+# **Chatbot in Top Right Corner**
     with col2:
         if "chatbot_open" not in st.session_state:
             st.session_state.chatbot_open = False  # Default: Chatbot is closed
 
-        if st.button("💬 QA Chatbot)"):
+        if st.button("💬 QA Chatbot"):
             st.session_state.chatbot_open = not st.session_state.chatbot_open  # Toggle chatbot window
 
         if st.session_state.chatbot_open:
             st.subheader("💬 Chat with RAGBot")
+            
+            # Option 1: Text Input
             user_input = st.text_input("Ask your uploaded PDFs a question:")
 
+            # Option 2: Voice Input Button
+            if st.button("🎤 Use Voice Input"):
+                voice_query = recognize_speech()
+                if voice_query:
+                    user_input = voice_query  # Set voice input as the user query
+
             if user_input:
-                with st.spinner("Sri thinking.."):
+                with st.spinner("🤖 Thinking..."):
                     response = conversational_qa.invoke({"question": user_input})
                     st.success(response["answer"])
 
@@ -145,7 +178,7 @@ if st.session_state.user_authenticated:
 
             # Button to close chatbot
             if st.button("❌ Close Chatbot"):
-                st.session_state.chatbot_open = False             
+                st.session_state.chatbot_open = False       
  
 # ✅ Initialize Session State Keys
 required_keys = ["project_path", "suite_path", "test_creation_started", "manual_test_creation_started", 
@@ -687,6 +720,82 @@ def run_visual_test():
 
 
 
+st.sidebar.header("Test Plan Chatbot")
+llm = Ollama(model="deepseek-r1:1.5b")
+
+
+
+# Function to generate a Word document
+def create_word_document(content, filename):
+    doc = Document()
+    doc.add_heading("Test Plan", level=1)
+    
+    for section in content.split("\n"):
+        if section.strip():
+            doc.add_paragraph(section)
+    
+    # Save to an in-memory buffer
+    buffer = io.BytesIO()
+    doc.save(buffer)
+    buffer.seek(0)
+    return buffer, filename
+
+# Sidebar button to start chatbot
+if "chat_started" not in st.session_state:
+    st.session_state.chat_started = False
+
+if st.sidebar.button("Generate Test Plan", key="start_chatbot"):
+    st.session_state.chat_started = True
+
+if st.session_state.chat_started:
+    st.write("Welcome! Please select the type of test plan you want.")
+
+    # User selects test plan type
+    test_plan_type = st.selectbox(
+        "Choose the test plan type:", 
+        ["Functional", "Regression", "Performance", "Security", "Usability", "Compatibility"], 
+        key="test_plan_type"
+    )
+
+    if test_plan_type:
+        # Generate a test plan dynamically based on the selected type
+        test_plan_prompt = f"""
+        Generate a detailed {test_plan_type} Test Plan including the following sections:
+        - Test Plan Type: {test_plan_type}
+        - Objectives
+        - Scope
+        - Identified Risks
+        - Mitigation Strategies
+        - Test Environment
+        - Testing Tools
+        - Test Execution Approach
+        - Additional Notes
+        The test plan should be professional and structured.
+        """
+        
+        st.session_state.generated_test_plan = llm.invoke(test_plan_prompt)
+
+        # Display Generated Test Plan
+        st.subheader(f"Generated {test_plan_type} Test Plan")
+        st.write(st.session_state.generated_test_plan)
+
+        # Create and provide download option for Word document
+        word_buffer, word_filename = create_word_document(st.session_state.generated_test_plan, f"{test_plan_type}_test_plan.docx")
+        st.download_button("Download Test Plan as Word Document", word_buffer, file_name=word_filename, key="download_test_plan_word")
+
+    # Ask user if they want modifications
+    if "generated_test_plan" in st.session_state:
+        st.subheader("Do you want to modify the test plan?")
+        modify_prompt = st.text_area("Tell the chatbot what you want to modify (e.g., 'Make the risk analysis more detailed')", key="modify_prompt")
+         
+        if st.button("Modify Test Plan", key="modify_test_plan"):
+            modify_response = llm.invoke(f"Modify the {test_plan_type} test plan based on this request: {modify_prompt}\n\nHere is the current test plan:\n{st.session_state.generated_test_plan}")
+            st.session_state.modified_test_plan = modify_response
+            st.write(f"Chatbot: {modify_response}")
+
+            # Create and provide download option for the modified Word document
+            modified_word_buffer, modified_word_filename = create_word_document(st.session_state.modified_test_plan, f"{test_plan_type}_modified_test_plan.docx")
+            st.download_button("Download Modified Test Plan as Word Document", modified_word_buffer, file_name=modified_word_filename, key="download_modified_test_plan_word")
 
 # ✅ Streamlit UI Components
 st.title("AI-Powered Visual Testing & Regression Analysis")
@@ -757,3 +866,5 @@ if st.session_state["suite_path"]:
         with open(existing_reports[selected_report], "r", encoding="utf-8") as f:
             st.components.v1.html(f.read(), height=800, scrolling=True)
  
+# Streamlit UI
+#st.title("AI Test Plan Generator Bot")
