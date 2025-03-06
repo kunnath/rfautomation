@@ -17,6 +17,8 @@ This project provides an automated test suite using Robot Framework and Docker. 
 ## Overview
 The `rfautomation` project utilizes Robot Framework, Docker, and a custom `app.py` script to facilitate running automated tests for web applications. The tests are executed in different environments (practice, dev, etc.), with configuration options for browser choices and other parameters. The project is designed to run tests through Docker containers and display results on a custom user interface created with Streamlit.
 
+![Example Image](./patent/flowdigram.png)
+
 ### ![Streamlit App Example](images/streamlit-example.png)
 ---
 
