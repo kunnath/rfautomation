@@ -1,0 +1,57 @@
+# Required Robot Framework Test Structure
+*** Settings ***
+Library           SeleniumLibrary
+Library           Collections    # Optional for complex validations
+
+*** Variables ***
+${URL}            https://example.com/login
+${VALID_USER}     testuser
+${VALID_PASS}     Test@123
+${INVALID_USER}   wronguser
+${INVALID_PASS}   Wrong@123
+
+*** Test Cases ***
+[Test Case Name]
+    [Documentation]    [Description]
+    [Tags]            [Tag1]    [Tag2]
+    [Setup]           [Initialization]
+    [Teardown]        [Cleanup]
+    [Steps]
+    [Verification]
+
+# Required Elements for Login Page Tests:
+1. Valid Login Test
+    - Open browser to login page
+    - Enter valid credentials
+    - Verify successful redirect
+
+2. Invalid Login Test
+    - Attempt login with:
+        * Wrong username
+        * Wrong password
+        * Both wrong
+    - Verify error message appears
+
+3. Field Validation
+    - Empty username
+    - Empty password
+    - Both empty
+    - Verify validation messages
+
+4. Password Masking
+    - Verify password field obscures text
+
+# Formatting Rules:
+1. Use 4-space indentation
+2. Locator strategies in order of preference:
+    a) id=element_id
+    b) css=.class_name
+    c) xpath=//tagname[@attribute='value']
+3. Assertions must use:
+    - Page Should Contain Element
+    - Element Should Be Visible
+    - Element Should Contain
+4. Browser management:
+    - Open Browser    ${URL}    chrome
+    - Close Browser    (in Teardown)
+5. Test case names should use Title Case

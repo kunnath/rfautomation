@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generate Test Cases</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: auto;
+        }
+        input[type="text"], textarea {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+        }
+        input[type="file"] {
+            margin: 10px 0;
+        }
+        button {
+            padding: 10px 15px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        #response {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            background-color: #f9f9f9;
+        }
+        #loading {
+            display: none;
+            text-align: center;
+            margin-top: 20px;
+        }
+        #loading img {
+            width: 50px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>Generate Robot Framework Test Cases</h2>
+        
+        <form id="generateForm" enctype="multipart/form-data">
+            <label for="image">Upload UI Screenshot:</label>
+            <input type="file" id="image" name="image" accept="image/*" required><br>
+
+            <label for="model_name">Model Name:</label>
+            <input type="text" id="model_name" name="model_name" value="deepseek-coder" required><br>
+
+            <label for="requirements_text">Requirements (optional):</label>
+            <textarea id="requirements_text" name="requirements_text"></textarea><br>
+
+            <button type="submit">Generate Test Cases</button>
+        </form>
+
+        <div id="loading">
+            <p><img src="https://i.imgur.com/MKY8qTY.gif" alt="Loading..."> Generating Test Cases, Please Wait...</p>
+        </div>
+
+        <div id="response"></div>
+    </div>
+
+    <script>
+        document.getElementById('generateForm').addEventListener('submit', async function(event) {
+            event.preventDefault();
+
+            const formData = new FormData();
+            formData.append("image", document.getElementById('image').files[0]);
+            formData.append("model_name", document.getElementById('model_name').value);
+            formData.append("requirements_text", document.getElementById('requirements_text').value);
+
+            // Show the loading spinner
+            document.getElementById('loading').style.display = 'block';
+            document.getElementById('response').style.display = 'none'; // Hide previous response
+
+            console.log('Form data:', formData); // Log to check the data
+
+            try {
+                const response = await fetch("http://127.0.0.1:8000/generate_tests/", {
+                    method: "POST",
+                    body: formData
+                });
+
+                const result = await response.json();
+
+                if (response.ok) {
+                    document.getElementById('response').innerHTML = `<pre>${result.test_cases}</pre>`;
+                } else {
+                    document.getElementById('response').innerHTML = `<strong>Error:</strong> ${result.error}`;
+                }
+            } catch (error) {
+                document.getElementById('response').innerHTML = `<strong>Error:</strong> ${error.message}`;
+            } finally {
+                // Hide the loading spinner after processing
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('response').style.display = 'block';
+            }
+        });
+    </script>
+
+</body>
+</html>
